@@ -15,10 +15,41 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://adityarajbr-portfolio.vercel.app"),
   title: "Aditya Raj | Creative Developer",
-  description: "Portfolio of the Future - Crafting digital experiences that push boundaries",
-  keywords: ["developer", "portfolio", "creative", "web development", "react", "next.js"],
-  generator: 'v0.app'
+  description:
+    "Portfolio of the Future – Crafting digital experiences that push boundaries",
+  keywords: [
+    "Aditya Raj",
+    "Full Stack Developer",
+    "Creative Developer",
+    "Next.js Portfolio",
+    "React Developer",
+  ],
+  openGraph: {
+    title: "Aditya Raj | Creative Developer",
+    description:
+      "Portfolio of the Future – Crafting digital experiences that push boundaries",
+    url: "https://adityarajbr-portfolio.vercel.app",
+    siteName: "Aditya Raj Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Aditya Raj Portfolio Preview",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aditya Raj | Creative Developer",
+    description:
+      "Portfolio of the Future – Crafting digital experiences that push boundaries",
+    images: ["/og-image.png"],
+  },
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -28,7 +59,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased custom-cursor-active`}>
+      <body
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased custom-cursor-active`}
+      >
         {children}
         <Analytics />
       </body>
