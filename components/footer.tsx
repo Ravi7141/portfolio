@@ -162,7 +162,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
             <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-[0.3em] mb-8">Contact</h4>
             <div className="space-y-6">
               <motion.a
-                href="https://maps.app.goo.gl/"
+                href="https://maps.app.goo.gl/bAiDP4bgFGq8WcEd7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 group"
