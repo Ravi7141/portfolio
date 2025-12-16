@@ -1,7 +1,9 @@
+import { AnimationProvider } from "@/components/providers/animation-provider"
 import type React from "react"
 import type { Metadata } from "next"
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@vercel/analytics/react"
 import "./globals.css"
 
 const spaceGrotesk = Space_Grotesk({
@@ -60,10 +62,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased custom-cursor-active`}
+        className={`${ spaceGrotesk.variable } ${ jetbrainsMono.variable } font - sans antialiased custom - cursor - active`}
       >
-        {children}
-        <Analytics />
+        <AnimationProvider>
+          {children}
+          <Analytics />
+        </AnimationProvider>
       </body>
     </html>
   )

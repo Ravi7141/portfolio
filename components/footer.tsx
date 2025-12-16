@@ -90,7 +90,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
                 <span className="text-white">RAJ</span>
               </h3>
               <motion.div
-                className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-cyan-400 to-transparent"
+                className="absolute -bottom-2 left-0 h-[3px] bg-linear-to-r from-cyan-400 to-transparent"
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -253,9 +253,9 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
 
         {/* Divider with animation */}
         <div className="relative h-px mb-8">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-500/30 to-transparent" />
           <motion.div
-            className="absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"
+            className="absolute top-0 left-0 h-full w-1/3 bg-linear-to-r from-transparent via-cyan-500/50 to-transparent"
             animate={{ x: ["-100%", "400%"] }}
             transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
           />

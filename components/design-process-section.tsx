@@ -1,7 +1,8 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { m, useInView } from "framer-motion"
+import { staggerContainer, fadeUp, viewportConfig, scaleIn } from "@/lib/animations"
 
 interface DesignProcessSectionProps {
     setCursorVariant: (variant: string) => void
@@ -37,7 +38,6 @@ const processSteps = [
 
 export function DesignProcessSection({ setCursorVariant }: DesignProcessSectionProps) {
     const containerRef = useRef<HTMLElement>(null)
-    const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
     return (
         <section
@@ -47,11 +47,12 @@ export function DesignProcessSection({ setCursorVariant }: DesignProcessSectionP
         >
             <div className="max-w-6xl mx-auto">
                 {/* Section Header */}
-                <motion.div
+                <m.div
                     className="mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6 }}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={viewportConfig}
                 >
                     <span className="text-primary font-mono text-sm tracking-widest uppercase">Steps I follow</span>
                     <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mt-4">
@@ -62,17 +63,21 @@ export function DesignProcessSection({ setCursorVariant }: DesignProcessSectionP
                     <p className="text-muted-foreground mt-4 max-w-2xl text-lg">
                         A systematic approach to building exceptional digital experiences.
                     </p>
-                </motion.div>
+                </m.div>
 
                 {/* Process Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <m.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    variants={staggerContainer(0.1)}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={viewportConfig}
+                >
                     {processSteps.map((step, index) => (
-                        <motion.div
+                        <m.div
                             key={step.number}
                             className="group relative p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-500"
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                            variants={fadeUp}
                             whileHover={{
                                 scale: 1.02,
                                 boxShadow: "0 0 40px rgba(0, 212, 255, 0.15)"
@@ -81,12 +86,12 @@ export function DesignProcessSection({ setCursorVariant }: DesignProcessSectionP
                             onMouseLeave={() => setCursorVariant("default")}
                         >
                             {/* Step Number */}
-                            <motion.span
+                            <m.span
                                 className="text-6xl font-bold text-primary/20 absolute top-4 right-6"
                                 whileHover={{ scale: 1.1, color: "hsl(var(--primary) / 0.4)" }}
                             >
                                 {step.number}
-                            </motion.span>
+                            </m.span>
 
                             {/* Content */}
                             <div className="relative z-10">
@@ -100,9 +105,9 @@ export function DesignProcessSection({ setCursorVariant }: DesignProcessSectionP
 
                             {/* Hover Glow Effect */}
                             <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        </motion.div>
+                        </m.div>
                     ))}
-                </div>
+                </m.div>
             </div>
         </section>
     )

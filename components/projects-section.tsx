@@ -2,10 +2,9 @@
 
 import type React from "react"
 import { useRef, useState } from "react"
-import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { ExternalLink, Github, Star, GitFork, Loader2 } from "lucide-react"
-
-import useSWR from "swr"
+import { m, useInView, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { ExternalLink, Github, Star, GitFork } from "lucide-react"
+import { fadeUp, staggerContainer, viewportConfig, scaleIn } from "@/lib/animations"
 
 interface ProjectsSectionProps {
   setCursorVariant: (variant: string) => void
@@ -23,8 +22,6 @@ interface GitHubProject {
   updatedAt: string
   image?: string
 }
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 const languageColors: Record<string, string> = {
   JavaScript: "#f7df1e",
@@ -89,13 +86,13 @@ function ProjectCard({
   const imageUrl = project.image || `https://loremflickr.com/600/400/${keywords}?lock=${randomId}`
 
   return (
-    <motion.div
+    <m.div
       ref={cardRef}
-      className="relative group"
-      initial={{ opacity: 0, y: 100 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay: index * 0.15, type: "spring" }}
+      className="relative group h-full"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-10%" }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => {
         setIsHovered(true)
@@ -109,20 +106,21 @@ function ProjectCard({
         perspective: 1000,
       }}
     >
-      <motion.div
-        className="relative h-[300px] md:h-[350px] rounded-2xl overflow-hidden border border-border bg-card"
+      <m.div
+        className="relative h-[350px] md:h-[400px] rounded-2xl overflow-hidden border border-border bg-card shadow-lg"
         style={{
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
         }}
         whileHover={{
-          boxShadow: "0 0 60px rgba(34, 211, 238, 0.3)",
+          boxShadow: "0 0 60px rgba(34, 211, 238, 0.2)",
+          borderColor: "rgba(34, 211, 238, 0.5)"
         }}
       >
         {/* Image container with fluid distortion effect */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
+        <div className="absolute inset-0 overflow-hidden bg-background">
+          <m.div
             className="absolute inset-0"
             style={{
               x: distortX,
@@ -130,7 +128,7 @@ function ProjectCard({
             }}
           >
             {/* Red channel */}
-            <motion.img
+            <m.img
               src={imageUrl}
               alt=""
               className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-0"
@@ -142,7 +140,7 @@ function ProjectCard({
               style={{ filter: "hue-rotate(-60deg) saturate(2)" }}
             />
             {/* Blue channel */}
-            <motion.img
+            <m.img
               src={imageUrl}
               alt=""
               className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-0"
@@ -154,22 +152,21 @@ function ProjectCard({
               style={{ filter: "hue-rotate(60deg) saturate(2)" }}
             />
             {/* Main image */}
-            <motion.img
+            <m.img
               src={imageUrl}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-700 will-change-transform"
               initial={{ scale: 1.1 }}
               animate={{
                 scale: isHovered ? 1.15 : 1.1,
                 filter: isHovered ? "saturate(1.2) contrast(1.1)" : "saturate(1) contrast(1)",
               }}
-              transition={{ duration: 0.6 }}
             />
-          </motion.div>
+          </m.div>
 
           {/* Scan lines overlay */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
+          <m.div
+            className="absolute inset-0 pointer-events-none z-10"
             style={{
               background:
                 "repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 2px)",
@@ -179,29 +176,29 @@ function ProjectCard({
             }}
           />
 
-          <div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-transparent z-20" />
         </div>
 
         {/* Content */}
-        <motion.div
-          className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end"
+        <m.div
+          className="absolute inset-0 p-6 flex flex-col justify-end z-30"
           style={{ transform: "translateZ(50px)" }}
         >
-          <motion.div className="flex items-center gap-4 mb-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <m.div className="flex items-center gap-4 mb-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {project.stars > 0 && (
-              <span className="flex items-center gap-1 text-xs text-yellow-400">
+              <span className="flex items-center gap-1 text-xs text-yellow-400 font-mono bg-yellow-400/10 px-2 py-1 rounded">
                 <Star className="w-3 h-3 fill-current" />
                 {project.stars}
               </span>
             )}
             {project.forks > 0 && (
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono bg-muted/50 px-2 py-1 rounded">
                 <GitFork className="w-3 h-3" />
                 {project.forks}
               </span>
             )}
             {project.language && (
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono bg-muted/50 px-2 py-1 rounded">
                 <span
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: languageColors[project.language] || "#888" }}
@@ -209,64 +206,63 @@ function ProjectCard({
                 {project.language}
               </span>
             )}
-          </motion.div>
+          </m.div>
 
           {/* Tags */}
-          <motion.div
-            className="flex flex-wrap gap-2 mb-3"
+          <m.div
+            className="flex flex-wrap gap-2 mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isHovered ? 1 : 0.7, y: 0 }}
           >
             {project.tags.slice(0, 4).map((tag, i) => (
               <span
                 key={i}
-                className="px-2 py-0.5 text-[10px] font-mono bg-primary/20 text-primary rounded-full border border-primary/30"
+                className="px-2 py-0.5 text-[10px] font-mono bg-primary/20 text-primary rounded-full border border-primary/30 backdrop-blur-md"
               >
                 {tag}
               </span>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* Title with RGB Split effect */}
-          <motion.div className="relative" animate={{ y: isHovered ? -10 : 0 }}>
-            <motion.h3
-              className="absolute text-lg md:text-2xl font-bold text-red-500/50"
+          <m.div className="relative mb-2" animate={{ y: isHovered ? -5 : 0 }}>
+            {/* Glitch layers */}
+            <m.h3
+              className="absolute text-xl md:text-2xl font-bold text-red-500/50"
               animate={{
                 x: isHovered ? -2 : 0,
                 opacity: isHovered ? 0.7 : 0,
               }}
-              transition={{ duration: 0.1 }}
             >
               {project.title}
-            </motion.h3>
-            <motion.h3
-              className="absolute text-lg md:text-2xl font-bold text-cyan-500/50"
+            </m.h3>
+            <m.h3
+              className="absolute text-xl md:text-2xl font-bold text-cyan-500/50"
               animate={{
                 x: isHovered ? 2 : 0,
                 opacity: isHovered ? 0.7 : 0,
               }}
-              transition={{ duration: 0.1 }}
             >
               {project.title}
-            </motion.h3>
-            <h3 className="text-lg md:text-2xl font-bold text-foreground relative">
+            </m.h3>
+            <h3 className="text-xl md:text-2xl font-bold text-foreground relative z-10">
               {project.title}
               <span className="text-primary">.</span>
             </h3>
-          </motion.div>
+          </m.div>
 
           {/* Description */}
-          <motion.p
-            className="text-muted-foreground text-sm md:text-base max-w-md mt-2 line-clamp-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+          <m.p
+            className="text-muted-foreground text-sm max-w-md line-clamp-2"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0.7, height: isHovered ? "auto" : "auto" }}
           >
             {project.description}
-          </motion.p>
+          </m.p>
 
           {/* Links */}
-          <motion.div
-            className="flex gap-4 mt-4"
+          <m.div
+            className="flex gap-4 mt-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
           >
@@ -274,51 +270,48 @@ function ProjectCard({
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold tracking-wide hover:bg-primary/80 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)]"
             >
               <ExternalLink className="w-4 h-4" />
-              View Project
+              VIEW PROJECT
             </a>
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 border border-border text-foreground rounded-lg text-sm font-medium hover:bg-card transition-colors"
+              className="flex items-center gap-2 px-4 py-2 border border-border text-foreground rounded-lg text-sm font-bold tracking-wide hover:bg-card hover:border-primary/50 transition-colors backdrop-blur-md"
             >
               <Github className="w-4 h-4" />
-              Code
+              CODE
             </a>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Project number */}
-        <motion.div
-          className="absolute top-6 right-6 text-5xl font-bold text-foreground/10"
-          style={{ transform: "translateZ(30px)" }}
+        <m.div
+          className="absolute top-6 right-6 text-6xl font-black text-foreground/5 z-0 select-none"
+          style={{ transform: "translateZ(20px)" }}
         >
           {String(index + 1).padStart(2, "0")}
-        </motion.div>
+        </m.div>
 
         {/* Glitch overlay on hover */}
         {isHovered && (
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
+          <m.div
+            className="absolute inset-0 pointer-events-none z-40"
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.5, 0] }}
+            animate={{ opacity: [0, 0.2, 0] }}
             transition={{ duration: 0.2, repeat: 2 }}
           >
             <div className="absolute inset-0 bg-primary/10" style={{ clipPath: "inset(30% 0 60% 0)" }} />
-          </motion.div>
+          </m.div>
         )}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   )
 }
 
 export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
-  const containerRef = useRef<HTMLElement>(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
-
   const projects: GitHubProject[] = [
     {
       title: "Bus Reservation System",
@@ -347,7 +340,10 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
   ]
 
   return (
-    <section ref={containerRef} id="projects" className="min-h-screen px-4 py-20 md:py-32">
+    <section id="projects" className="min-h-screen px-4 py-20 md:py-32 relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.5))] pointer-events-none" />
+
       <svg className="absolute w-0 h-0">
         <defs>
           <filter id="red-channel">
@@ -371,59 +367,60 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
         </defs>
       </svg>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto z-10 relative">
         {/* Section header */}
-        <motion.div
+        <m.div
           className="mb-20"
-          initial={{ opacity: 0, x: -50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportConfig}
         >
           <span className="text-primary font-mono text-sm tracking-widest">{"// 002"}</span>
           <h2 className="text-4xl md:text-6xl font-bold mt-2 relative">
-            <span className="glitch-text block">FEATURED</span>
             <span className="flex items-center gap-2">
-              <span className="text-primary">PROJECTS</span>
+              FEATURED <span className="text-primary">PROJECTS</span>
               <span className="text-foreground">.</span>
             </span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg">
             Selected works showcasing full-stack development and AI integration.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Projects grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} setCursorVariant={setCursorVariant} />
           ))}
         </div>
 
-        <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <m.div
+          className="mt-24 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportConfig}
         >
           <a
             href="https://github.com/ADITYA0018TH"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 border-2 border-primary text-primary font-mono text-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 rounded-lg group"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-border text-foreground font-mono text-lg hover:border-primary hover:text-primary transition-all duration-300 rounded-full group bg-card/50 backdrop-blur-sm"
             onMouseEnter={() => setCursorVariant("hover")}
             onMouseLeave={() => setCursorVariant("default")}
           >
-            <Github className="w-5 h-5" />
+            <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
             VIEW GITHUB PROFILE
-            <motion.span
+            <m.span
               className="inline-block"
               animate={{ x: [0, 5, 0] }}
               transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
             >
               →
-            </motion.span>
+            </m.span>
           </a>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   )

@@ -1,8 +1,9 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { m, useInView } from "framer-motion"
 import { VelocityScroll } from "@/components/velocity-scroll"
+import { fadeUp, viewportConfig, textRevealContainer, textRevealItem } from "@/lib/animations"
 
 interface AboutSectionProps {
   setCursorVariant: (variant: string) => void
@@ -10,7 +11,6 @@ interface AboutSectionProps {
 
 export function AboutSection({ setCursorVariant }: AboutSectionProps) {
   const containerRef = useRef<HTMLElement>(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
   const words = [
     "I'm",
@@ -51,38 +51,37 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
 
       <div className="max-w-5xl mx-auto z-10">
         {/* Section label */}
-        <motion.div
+        <m.div
           className="mb-16"
-          initial={{ opacity: 0, x: -50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportConfig}
         >
           <span className="text-primary font-mono text-sm tracking-widest">{"// 001"}</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2">
             ABOUT<span className="text-primary">.</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {/* Animated paragraph */}
-        <motion.p
+        <m.p
           className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed"
           onMouseEnter={() => setCursorVariant("text")}
           onMouseLeave={() => setCursorVariant("default")}
+          variants={textRevealContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportConfig}
         >
           {words.map((word, index) => (
-            <motion.span
+            <m.span
               key={index}
               className={`inline-block mr-[0.3em] ${["Full", "Stack", "Developer", "MERN", "scalable", "Passionate"].includes(word)
                 ? "text-primary font-semibold"
                 : "text-foreground"
                 }`}
-              initial={{ opacity: 0, y: 50, rotate: -5 }}
-              animate={isInView ? { opacity: 1, y: 0, rotate: 0 } : {}}
-              transition={{
-                delay: index * 0.03,
-                type: "spring",
-                stiffness: 100,
-              }}
+              variants={textRevealItem}
               whileHover={{
                 scale: 1.1,
                 color: "var(--primary)",
@@ -90,16 +89,17 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
               }}
             >
               {word}
-            </motion.span>
+            </m.span>
           ))}
-        </motion.p>
+        </m.p>
 
         {/* Stats */}
-        <motion.div
+        <m.div
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportConfig}
         >
           {[
             { number: "20+", label: "Skills Mastered" },
@@ -107,7 +107,7 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
             { number: "B.Tech", label: "CSE" },
             { number: "MERN", label: "Specialist" },
           ].map((stat, index) => (
-            <motion.div
+            <m.div
               key={index}
               className="text-center p-6 border border-border rounded-lg bg-card/50 backdrop-blur-sm"
               whileHover={{
@@ -118,28 +118,30 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
               onMouseEnter={() => setCursorVariant("hover")}
               onMouseLeave={() => setCursorVariant("default")}
             >
-              <motion.span
+              <m.span
                 className="text-4xl md:text-5xl font-bold text-primary"
                 initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : {}}
-                transition={{ delay: 1.2 + index * 0.1, type: "spring" }}
+                whileInView={{ scale: 1 }}
+                viewport={viewportConfig}
+                transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
               >
                 {stat.number}
-              </motion.span>
+              </m.span>
               <p className="mt-2 text-sm font-mono text-muted-foreground tracking-wider">{stat.label}</p>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Decorative number */}
-        <motion.div
+        <m.div
           className="absolute right-10 top-1/2 text-[20vw] font-bold text-muted/5 select-none pointer-events-none"
           initial={{ opacity: 0, x: 100 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={viewportConfig}
           transition={{ duration: 1 }}
         >
           01
-        </motion.div>
+        </m.div>
       </div>
     </section>
 

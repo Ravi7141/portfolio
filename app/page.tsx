@@ -5,7 +5,6 @@ import { CustomCursor } from "@/components/custom-cursor"
 import { HeroSection } from "@/components/hero-section"
 import { FloatingNav } from "@/components/floating-nav"
 import { ProjectsSection } from "@/components/projects-section"
-import { TechStackSection } from "@/components/tech-stack-section"
 import { AboutSection } from "@/components/about-section"
 import { ContactSection } from "@/components/contact-section"
 import { ParticleGrid } from "@/components/particle-grid"
@@ -15,6 +14,7 @@ import { ExperienceSection } from "@/components/experience-section"
 import { DesignProcessSection } from "@/components/design-process-section"
 import { CommunitySection } from "@/components/community-section"
 import { Footer } from "@/components/footer"
+import { TechStackSection } from "@/components/tech-stack-section"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -41,7 +41,6 @@ export default function Home() {
         <DesignProcessSection setCursorVariant={setCursorVariant} />
         <ProjectsSection setCursorVariant={setCursorVariant} />
         <TechStackSection setCursorVariant={setCursorVariant} />
-
         <ExperienceSection setCursorVariant={setCursorVariant} />
         <CommunitySection setCursorVariant={setCursorVariant} />
         <ContactSection setCursorVariant={setCursorVariant} />
