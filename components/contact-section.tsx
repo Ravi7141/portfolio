@@ -39,9 +39,8 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
         <section
             ref={containerRef}
             id="contact"
-            className="relative min-h-screen py-24 md:py-32 overflow-hidden flex items-center"
+            className="relative min-h-dvh py-16 md:py-32 overflow-hidden flex items-center"
         >
-            {/* Dynamic Background */}
             {/* Dynamic Background */}
             <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(0,212,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,212,255,0.03)_1px,transparent_1px)] bg-size-[100px_100px]" />
@@ -70,12 +69,12 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                 ))}
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
-                <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10 w-full">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
 
                     {/* Left - Content */}
                     <motion.div
-                        className="space-y-12"
+                        className="space-y-8 md:space-y-12"
                         initial="hidden"
                         whileInView="show"
                         viewport={viewportConfig}
@@ -92,33 +91,33 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                                 CONTACT
                             </span>
-                            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                                 <span className="block text-foreground">Let's build</span>
                                 <span className="block text-muted-foreground">something</span>
                                 <span className="block text-primary">extraordinary.</span>
                             </h2>
                         </motion.div>
 
-                        <motion.p variants={fadeUp} className="text-xl text-muted-foreground leading-relaxed max-w-md">
+                        <motion.p variants={fadeUp} className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-md">
                             Have a project in mind or just want to chat? I'm always open to new ideas and opportunities.
                         </motion.p>
 
-                        <motion.div variants={fadeUp} className="space-y-6">
+                        <motion.div variants={fadeUp} className="space-y-4 md:space-y-6">
                             <a
                                 href="mailto:aditya.raj862003@gmail.com"
                                 className="group block"
                                 onMouseEnter={() => setCursorVariant("hover")}
                                 onMouseLeave={() => setCursorVariant("default")}
                             >
-                                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border group-hover:border-primary/50 transition-all duration-300 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary/5 relative overflow-hidden">
+                                <div className="p-5 md:p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border group-hover:border-primary/50 transition-all duration-300 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary/5 relative overflow-hidden">
                                     <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                    <div className="flex items-center gap-6 relative z-10">
-                                        <div className="p-4 rounded-full bg-background border border-border group-hover:border-primary transition-colors">
-                                            <Mail className="w-6 h-6 text-primary" />
+                                    <div className="flex items-center gap-4 md:gap-6 relative z-10">
+                                        <div className="p-3 md:p-4 rounded-full bg-background border border-border group-hover:border-primary transition-colors">
+                                            <Mail className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground font-mono mb-1">Email Me</p>
-                                            <p className="text-lg md:text-xl font-medium text-foreground group-hover:text-primary transition-colors">aditya.raj862003@gmail.com</p>
+                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground group-hover:text-primary transition-colors break-all">aditya.raj862003@gmail.com</p>
                                         </div>
                                         <ArrowRight className="w-5 h-5 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                                     </div>
@@ -126,14 +125,14 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                             </a>
 
                             <div className="group block">
-                                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-                                    <div className="flex items-center gap-6 relative z-10">
-                                        <div className="p-4 rounded-full bg-background border border-border group-hover:border-primary transition-colors">
-                                            <MapPin className="w-6 h-6 text-primary" />
+                                <div className="p-5 md:p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+                                    <div className="flex items-center gap-4 md:gap-6 relative z-10">
+                                        <div className="p-3 md:p-4 rounded-full bg-background border border-border group-hover:border-primary transition-colors">
+                                            <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground font-mono mb-1">Located In</p>
-                                            <p className="text-lg md:text-xl font-medium text-foreground">Bihar, India</p>
+                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground">Bihar, India</p>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +143,7 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                     {/* Right - Form */}
                     <motion.div
                         style={{ y }}
-                        className="relative"
+                        className="relative mt-8 lg:mt-0"
                     >
                         {/* Decorative background for form */}
                         <div className="absolute -inset-1 bg-linear-to-b from-primary/20 via-transparent to-transparent opacity-50 blur-2xl -z-10 rounded-4xl" />
@@ -152,11 +151,11 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                         <form
                             ref={formRef}
                             onSubmit={handleSubmit}
-                            className="space-y-6 p-8 md:p-10 rounded-4xl bg-card/30 backdrop-blur-xl border border-white/10 dark:border-white/5 shadow-2xl relative overflow-hidden"
+                            className="space-y-6 p-6 md:p-10 rounded-3xl md:rounded-4xl bg-card/30 backdrop-blur-xl border border-white/10 dark:border-white/5 shadow-2xl relative overflow-hidden"
                         >
                             <div className="absolute inset-0 bg-linear-to-b from-white/5 to-transparent pointer-events-none" />
 
-                            <h3 className="text-2xl font-bold mb-8 relative z-10">Send a Message</h3>
+                            <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 relative z-10">Send a Message</h3>
 
                             <div className="space-y-4 relative z-10">
                                 <div className="space-y-2">
@@ -207,7 +206,7 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full bg-primary text-primary-foreground p-5 rounded-xl font-bold text-lg flex items-center justify-center gap-3 relative overflow-hidden group"
+                                        className="w-full bg-primary text-primary-foreground p-4 md:p-5 rounded-xl font-bold text-lg flex items-center justify-center gap-3 relative overflow-hidden group"
                                         onMouseEnter={() => setCursorVariant("hover")}
                                         onMouseLeave={() => setCursorVariant("default")}
                                     >
