@@ -14,31 +14,36 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
 
   const words = [
     "I'm",
-    "Aditya,",
+    "Ravi,",
     "a",
-    "Full",
-    "Stack",
+    "Java",
+    "Backend",
     "Developer",
+    "specializing",
+    "in",
     "building",
+    "RESTful",
+    "APIs",
+    "and",
     "scalable",
-    "and",
-    "user-friendly",
-    "web",
-    "applications",
+    "backend",
+    "systems",
     "using",
-    "the",
-    "MERN",
-    "stack.",
-    "Passionate",
-    "about",
-    "modern",
-    "web",
-    "systems,",
-    "clean",
-    "design,",
+    "Java",
     "and",
-    "data",
-    "security.",
+    "Spring",
+    "Boot.",
+    "Certified",
+    "by",
+    "Oracle",
+    "and",
+    "passionate",
+    "about",
+    "clean",
+    "architecture",
+    "and",
+    "database",
+    "design.",
   ]
 
   return (
@@ -46,7 +51,7 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
 
       {/* Velocity Scroll Background */}
       <div className="absolute inset-0 flex flex-col justify-center opacity-5 pointer-events-none select-none">
-        <VelocityScroll text="VISIONARY • INNOVATOR • CREATOR •" default_velocity={2} className="text-6xl md:text-9xl font-black text-foreground" />
+        <VelocityScroll text="BACKEND • JAVA • SPRING BOOT • API •" default_velocity={2} className="text-6xl md:text-9xl font-black text-foreground" />
       </div>
 
       <div className="max-w-5xl mx-auto z-10">
@@ -77,7 +82,7 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
           {words.map((word, index) => (
             <m.span
               key={index}
-              className={`inline-block mr-[0.3em] ${["Full", "Stack", "Developer", "MERN", "scalable", "Passionate"].includes(word)
+              className={`inline-block mr-[0.3em] ${["Java", "Spring", "Boot.", "Backend", "RESTful", "APIs", "Oracle"].includes(word)
                 ? "text-primary font-semibold"
                 : "text-foreground"
                 }`}
@@ -102,10 +107,10 @@ export function AboutSection({ setCursorVariant }: AboutSectionProps) {
           viewport={viewportConfig}
         >
           {[
-            { number: "20+", label: "Skills Mastered" },
+            { number: "15+", label: "Skills Mastered" },
             { number: "2026", label: "Graduation" },
-            { number: "B.Tech", label: "CSE" },
-            { number: "MERN", label: "Specialist" },
+            { number: "Oracle", label: "Certified" },
+            { number: "Java", label: "Specialist" },
           ].map((stat, index) => (
             <m.div
               key={index}

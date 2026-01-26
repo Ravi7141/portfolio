@@ -104,7 +104,7 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
 
                         <motion.div variants={fadeUp} className="space-y-4 md:space-y-6">
                             <a
-                                href="mailto:aditya.raj862003@gmail.com"
+                                href="mailto:rajputravi2070@gmail.com"
                                 className="group block"
                                 onMouseEnter={() => setCursorVariant("hover")}
                                 onMouseLeave={() => setCursorVariant("default")}
@@ -117,7 +117,7 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground font-mono mb-1">Email Me</p>
-                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground group-hover:text-primary transition-colors break-all">aditya.raj862003@gmail.com</p>
+                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground group-hover:text-primary transition-colors break-all">rajputravi2070@gmail.com</p>
                                         </div>
                                         <ArrowRight className="w-5 h-5 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                                     </div>
@@ -132,11 +132,32 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground font-mono mb-1">Located In</p>
-                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground">Bihar, India</p>
+                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground">Vadodara, India</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <a
+                                href="tel:+919313799018"
+                                className="group block"
+                                onMouseEnter={() => setCursorVariant("hover")}
+                                onMouseLeave={() => setCursorVariant("default")}
+                            >
+                                <div className="p-5 md:p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border group-hover:border-primary/50 transition-all duration-300 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary/5 relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <div className="flex items-center gap-4 md:gap-6 relative z-10">
+                                        <div className="p-3 md:p-4 rounded-full bg-background border border-border group-hover:border-primary transition-colors">
+                                            <span className="text-xl md:text-2xl">📞</span>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground font-mono mb-1">Call Me</p>
+                                            <p className="text-base sm:text-lg md:text-xl font-medium text-foreground group-hover:text-primary transition-colors">+91-9313799018</p>
+                                        </div>
+                                        <ArrowRight className="w-5 h-5 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                                    </div>
+                                </div>
+                            </a>
                         </motion.div>
                     </motion.div>
 

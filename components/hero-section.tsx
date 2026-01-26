@@ -1,548 +1,306 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
-import { Github, Linkedin, Download, Sparkles } from "lucide-react"
-import { MagneticButton } from "@/components/ui/magnetic-button"
+import React, { useRef, useState, useEffect } from "react"
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion"
+import {
+  Github,
+  Linkedin,
+  Download,
+  Terminal,
+  ArrowRight,
+  Copy,
+  Check,
+  Maximize2,
+  Minus,
+  X
+} from "lucide-react"
 import Image from "next/image"
 
-interface HeroSectionProps {
-  setCursorVariant: (variant: string) => void
-}
+// --- Components ---
 
-export function HeroSection({ setCursorVariant }: HeroSectionProps) {
-  const containerRef = useRef<HTMLElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [githubStars, setGithubStars] = useState<number | null>(null)
+// 1. The "Code Window" - Visualizing you as code
+const CodeWindow = () => {
+  const [copied, setCopied] = useState(false)
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
+  const handleCopy = () => {
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
-  const mouseXSpring = useSpring(0, { stiffness: 100, damping: 30 })
-  const mouseYSpring = useSpring(0, { stiffness: 100, damping: 30 })
+  const codeSnippet = `public class BackendArchitect {
+  
+  private String name = "Ravi Rajput";
+  private String[] stack = {
+    "Java", 
+    "Spring Boot", 
+    "Microservices", 
+    "AWS"
+  };
 
-  const nameChars = "ADITYA RAJ".split("")
-  const xTransforms = nameChars.map((_, index) => (x: number) => x * (index % 2 === 0 ? 1 : -1) * 0.3)
-  const yTransforms = nameChars.map((_, index) => (y: number) => y * (index % 2 === 0 ? -1 : 1) * 0.3)
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e
-      const { innerWidth, innerHeight } = window
-      const x = (clientX / innerWidth - 0.5) * 50
-      const y = (clientY / innerHeight - 0.5) * 50
-      setMousePosition({ x, y })
-      mouseXSpring.set(x)
-      mouseYSpring.set(y)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [mouseXSpring, mouseYSpring])
-
-  const roles = ["Full Stack Developer", "MERN Stack Developer", "Web Developer", "Problem Solver"]
-  const [currentRole, setCurrentRole] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Fetch GitHub stars
-  useEffect(() => {
-    const fetchGitHubStars = async () => {
-      try {
-        const response = await fetch('https://api.github.com/users/ADITYA0018TH/repos?per_page=100')
-        if (response.ok) {
-          const repos = await response.json()
-          const totalStars = repos.reduce((acc: number, repo: { stargazers_count: number }) => acc + repo.stargazers_count, 0)
-          setGithubStars(totalStars)
-        }
-      } catch (error) {
-        console.error('Failed to fetch GitHub stars:', error)
-      }
-    }
-    fetchGitHubStars()
-  }, [])
+  public void buildSystems() {
+    // Scalable, secure, and robust
+    System.out.println("Ready to deploy.");
+  }
+}`
 
   return (
-    <motion.section
-      ref={containerRef}
-      id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden px-4 py-20"
-      style={{
-        transform: `translateY(${useTransform(scrollYProgress, [0, 1], [0, 300])}px)`,
-        opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0]),
-        scale: useTransform(scrollYProgress, [0, 0.5], [1, 0.8]),
-      }}
-    >
-      {/* Eye Opening Transition Effect */}
-      <motion.div
-        className="absolute inset-0 z-50 pointer-events-none flex flex-col"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        transition={{ duration: 0.5, delay: 2.2 }} // Fade out container after effect forces complete
-      >
-        {/* Top Eyelid */}
-        <motion.div
-          className="bg-background w-full flex-1"
-          initial={{ scaleY: 1 }}
-          animate={{ scaleY: 0 }}
-          transition={{
-            duration: 1.5,
-            ease: [0.22, 1, 0.36, 1],
-            delay: 0.2,
-          }}
-          style={{ originY: 0 }}
-        />
-
-        {/* Bottom Eyelid */}
-        <motion.div
-          className="bg-background w-full flex-1"
-          initial={{ scaleY: 1 }}
-          animate={{ scaleY: 0 }}
-          transition={{
-            duration: 1.5,
-            ease: [0.22, 1, 0.36, 1],
-            delay: 0.2,
-          }}
-          style={{ originY: 1 }}
-        />
-
-        {/* Vision Blur Effect */}
-        <motion.div
-          className="absolute inset-0 backdrop-blur-[10px]"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ duration: 2, ease: "easeOut" }}
-        />
-      </motion.div>
-
-
-      {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,212,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,212,255,0.03)_1px,transparent_1px)] bg-size-[100px_100px]" />
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-center lg:items-center">
-          {/* Left Column - Text Content - takes more space */}
-          <div className="flex-1 text-center lg:text-left lg:pr-8">
-            {/* Status Badge */}
-            <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-              </span>
-              <span className="text-xs font-mono text-muted-foreground tracking-wider">AVAILABLE FOR WORK</span>
-            </motion.div>
-
-            <motion.h1
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter leading-[0.9] mb-6"
-              onMouseEnter={() => setCursorVariant("text")}
-              onMouseLeave={() => setCursorVariant("default")}
-            >
-              <div className="flex flex-wrap justify-center lg:justify-start">
-                {nameChars.map((char, index) => (
-                  <motion.span
-                    key={index}
-                    className="inline-block text-foreground hover:text-primary transition-colors duration-200"
-                    initial={{ y: 100, opacity: 0, rotateX: -90 }}
-                    animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                    transition={{
-                      delay: 0.3 + index * 0.04,
-                      type: "spring",
-                      stiffness: 100,
-                    }}
-                    style={{
-                      x: xTransforms[index](mousePosition.x),
-                      y: yTransforms[index](mousePosition.y),
-                    }}
-                    whileHover={{
-                      scale: 1.15,
-                      color: "hsl(var(--primary))",
-                      transition: { duration: 0.15 },
-                    }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.h1>
-
-            {/* Animated Role Switcher */}
-            <motion.div
-              className="h-12 mb-8 overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <motion.div
-                className="text-xl md:text-2xl lg:text-3xl font-mono text-primary"
-                key={currentRole}
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -40, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                {"<"}
-                {roles[currentRole]}
-                {" />"}
-              </motion.div>
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              A Motivated and detail-oriented <span className="text-primary font-semibold">Full Stack Developer</span> specialized
-              in building scalable web applications using the <span className="text-primary font-semibold">MERN stack</span>.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              className="flex flex-wrap justify-center lg:justify-start gap-4 mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              <motion.a
-                href="#projects"
-                className="group relative px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg overflow-hidden"
-                onMouseEnter={() => setCursorVariant("hover")}
-                onMouseLeave={() => setCursorVariant("default")}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  View My Work
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-linear-to-r from-primary via-cyan-400 to-primary bg-size-[200%_100%]"
-                  animate={{ backgroundPosition: ["0%_0%", "100%_0%", "0%_0%"] }}
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                />
-              </motion.a>
-
-              <motion.a
-                href="/resume.pdf"
-                download="Aditya_Raj_Resume.pdf"
-                className="group px-8 py-4 border border-border hover:border-primary text-foreground font-semibold rounded-lg flex items-center gap-2 transition-colors bg-card/50 backdrop-blur-sm"
-                onMouseEnter={() => setCursorVariant("hover")}
-                onMouseLeave={() => setCursorVariant("default")}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Download className="w-4 h-4 group-hover:text-primary transition-colors" />
-                <span className="group-hover:text-primary transition-colors">Resume</span>
-              </motion.a>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              className="flex justify-center lg:justify-start gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <MagneticButton>
-                <div className="relative group">
-                  <motion.a
-                    href="https://github.com/ADITYA0018TH"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block p-3 rounded-xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all backdrop-blur-sm"
-                    onMouseEnter={() => setCursorVariant("hover")}
-                    onMouseLeave={() => setCursorVariant("default")}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Github className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
-                  </motion.a>
-
-                  {/* Star Count Badge */}
-                  {githubStars !== null && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5, type: "spring" }}
-                      className="absolute -top-2 -right-2 flex items-center gap-0.5 bg-card border border-border px-1.5 py-0.5 rounded-full shadow-sm"
-                    >
-                      <Sparkles className="w-2 h-2 text-yellow-500" />
-                      <span className="text-[10px] font-mono font-bold">{githubStars}</span>
-                    </motion.div>
-                  )}
-                </div>
-              </MagneticButton>
-
-              <MagneticButton>
-                <motion.a
-                  href="https://linkedin.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block p-3 rounded-xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all backdrop-blur-sm"
-                  onMouseEnter={() => setCursorVariant("hover")}
-                  onMouseLeave={() => setCursorVariant("default")}
-                  whileHover={{ scale: 1.1, rotate: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Linkedin className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
-                </motion.a>
-              </MagneticButton>
-            </motion.div>
-          </div>
-
-          {/* Right Column - Image Content */}
-          <motion.div
-            className="relative shrink-0 lg:w-[380px] xl:w-[420px]"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-          >
-            {/* Decorative Elements - Geometric Lines */}
-            <motion.div
-              className="absolute -top-8 -right-8 w-32 h-32 border-t-2 border-r-2 border-primary/30"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 }}
-            />
-            <motion.div
-              className="absolute -bottom-8 -left-8 w-32 h-32 border-b-2 border-l-2 border-primary/30"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.9 }}
-            />
-
-            {/* Floating Tech Elements */}
-            <motion.div
-              className="absolute -left-4 top-1/4 w-2 h-16 bg-linear-to-b from-primary to-transparent"
-              animate={{ height: ["64px", "80px", "64px"], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            />
-            <motion.div
-              className="absolute -right-4 bottom-1/3 w-2 h-20 bg-linear-to-t from-cyan-400 to-transparent"
-              animate={{ height: ["80px", "96px", "80px"], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
-            />
-
-            {/* Photo Container - Passport Style */}
-            <motion.div
-              className="relative z-10"
-              style={{
-                x: useTransform(mouseXSpring, (x) => x * 0.3),
-                y: useTransform(mouseYSpring, (y) => y * 0.3),
-              }}
-            >
-              {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-linear-to-br from-primary/30 via-cyan-500/20 to-primary/30 blur-2xl opacity-60" />
-
-              {/* Photo Frame */}
-              <div className="relative">
-                {/* Animated Border */}
-                <motion.div
-                  className="absolute -inset-[3px] bg-linear-to-br from-primary via-cyan-400 to-primary rounded-2xl"
-                  animate={{
-                    background: [
-                      "linear-gradient(0deg, hsl(var(--primary)), rgb(34,211,238), hsl(var(--primary)))",
-                      "linear-gradient(180deg, hsl(var(--primary)), rgb(34,211,238), hsl(var(--primary)))",
-                      "linear-gradient(360deg, hsl(var(--primary)), rgb(34,211,238), hsl(var(--primary)))",
-                    ],
-                  }}
-                  transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-                />
-
-                <motion.div
-                  className="relative w-[280px] h-[360px] sm:w-[320px] sm:h-[420px] lg:w-[360px] lg:h-[480px] rounded-2xl overflow-hidden bg-background"
-                  onMouseEnter={() => setCursorVariant("hover")}
-                  onMouseLeave={() => setCursorVariant("default")}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <Image
-                    src="/aditya-profile.png"
-                    alt="Aditya Raj"
-                    fill
-                    className="object-cover object-top"
-                    priority
-                    onLoad={() => setImageLoaded(true)}
-                  />
-
-                  {/* Overlay Effects */}
-                  <motion.div
-                    className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60"
-                    whileHover={{ opacity: 0.3 }}
-                    transition={{ duration: 0.3 }}
-                  />
-
-                  {/* Scan Line Effect */}
-                  <motion.div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.03) 2px, rgba(0,212,255,0.03) 4px)",
-                    }}
-                  />
-
-                  {/* Horizontal Scan */}
-                  <motion.div
-                    className="absolute inset-x-0 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent opacity-50"
-                    animate={{ top: ["0%", "100%", "0%"] }}
-                    transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  />
-
-                  {/* Glitch Effect on Hover */}
-                  <motion.div
-                    className="absolute inset-0 mix-blend-screen opacity-0 hover:opacity-100"
-                    whileHover={{
-                      background: [
-                        "transparent",
-                        "linear-gradient(90deg, rgba(255,0,0,0.1) 0%, transparent 50%, rgba(0,255,255,0.1) 100%)",
-                        "transparent",
-                      ],
-                    }}
-                    transition={{ duration: 0.2 }}
-                  />
-
-                  {/* Name Overlay at Bottom */}
-                  <div className="absolute bottom-0 inset-x-0 p-4 bg-linear-to-t from-background via-background/80 to-transparent">
-                    <motion.p
-                      className="text-xs font-mono text-primary tracking-[0.2em]"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2 }}
-                    >
-                      CREATIVE DEVELOPER
-                    </motion.p>
-                  </div>
-                </motion.div>
-
-                {/* Corner Accents */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary" />
-                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
-                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-cyan-400/50" />
-                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-400/50" />
-              </div>
-
-              {/* Floating Badge - Experience */}
-              <motion.div
-                className="absolute -right-4 md:-right-12 lg:-right-20 top-1/4 px-3 py-1.5 bg-card/90 backdrop-blur-md border border-primary/30 rounded-lg shadow-lg"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.5 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">🚀</span>
-                  <div>
-                    <p className="text-[10px] text-muted-foreground font-mono">EXPERIENCE</p>
-                    <p className="text-sm font-bold text-foreground">3+ Years</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Floating Badge - Projects */}
-              <motion.div
-                className="absolute -left-4 md:-left-12 lg:-left-20 bottom-1/4 px-3 py-1.5 bg-card/90 backdrop-blur-md border border-primary/30 rounded-lg shadow-lg"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.7 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">💻</span>
-                  <div>
-                    <p className="text-[10px] text-muted-foreground font-mono">PROJECTS</p>
-                    <p className="text-sm font-bold text-foreground">50+</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Status Indicator */}
-              <motion.div
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-card/90 backdrop-blur-md border border-green-500/30 rounded-full shadow-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.9 }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                  </span>
-                  <span className="text-xs font-mono text-green-400">OPEN TO WORK</span>
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+    <div className="relative w-full max-w-md rounded-xl bg-[#0d1117] border border-white/10 shadow-2xl overflow-hidden font-mono text-sm">
+      {/* Window Header */}
+      <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-500/80" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+          <div className="w-3 h-3 rounded-full bg-green-500/80" />
+        </div>
+        <div className="text-xs text-muted-foreground flex items-center gap-1">
+          <Terminal className="w-3 h-3" />
+          <span>Developer.java</span>
+        </div>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+          <Copy onClick={handleCopy} className="w-3 h-3 cursor-pointer text-muted-foreground hover:text-white" />
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2 }}
-      >
-        <motion.div
-          className="flex flex-col items-center gap-2 cursor-pointer"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-          onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-        >
-          <span className="text-[10px] font-mono text-muted-foreground tracking-[0.3em]">SCROLL DOWN</span>
-          <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-2">
-            <motion.div
-              className="w-1.5 h-1.5 bg-primary rounded-full"
-              animate={{ y: [0, 12, 0], opacity: [1, 0.5, 1] }}
-              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-            />
-          </div>
-        </motion.div>
-      </motion.div>
+      {/* Code Area */}
+      <div className="p-6 overflow-x-auto">
+        <pre className="text-gray-300 leading-relaxed">
+          <code>
+            <span className="text-orange-400">public class</span> <span className="text-yellow-300">BackendArchitect</span> {"{"}
+            {"\n\n"}
+            {"  "}<span className="text-orange-400">private</span> String name = <span className="text-green-400">"Ravi Rajput"</span>;
+            {"\n"}
+            {"  "}<span className="text-orange-400">private</span> String[] stack = {"{"}
+            {"\n"}
+            {"    "}<span className="text-green-400">"Java"</span>,
+            {"\n"}
+            {"    "}<span className="text-green-400">"Spring Boot"</span>,
+            {"\n"}
+            {"    "}<span className="text-green-400">"Microservices"</span>
+            {"\n"}
+            {"  "}{"}"};
+            {"\n\n"}
+            {"  "}<span className="text-orange-400">public void</span> <span className="text-blue-400">buildSystems</span>() {"{"}
+            {"\n"}
+            {"    "}<span className="text-gray-500">// Scalable, secure, robust</span>
+            {"\n"}
+            {"    "}System.out.println(<span className="text-green-400">"Ready to work."</span>);
+            {"\n"}
+            {"  "}{"}"}
+            {"\n"}
+            {"}"}
+          </code>
+        </pre>
 
-      {/* Background Text */}
+        {/* Copy Feedback */}
+        {copied && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 bg-green-500 text-black text-xs font-bold rounded shadow-lg">
+            COPIED
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// 2. Main Hero Section
+export function HeroSection({ setCursorVariant }: { setCursorVariant: (v: string) => void }) {
+  const containerRef = useRef<HTMLElement>(null)
+
+  // Mouse Spotlight Logic
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
+
+  // Scroll Effects
+  const { scrollY } = useScroll()
+  const opacity = useTransform(scrollY, [0, 400], [1, 0])
+  const scale = useTransform(scrollY, [0, 400], [1, 0.9])
+  const filter = useTransform(scrollY, [0, 400], ["blur(0px)", "blur(10px)"])
+  const y = useTransform(scrollY, [0, 400], [0, -50])
+
+  return (
+    <section
+      ref={containerRef}
+      id="hero"
+      className="relative min-h-[100vh] flex items-center justify-center bg-background overflow-hidden py-20"
+      onMouseMove={handleMouseMove}
+    >
+      {/* --- Ambient Background --- */}
+
+      {/* 1. Dynamic Spotlight (Subtle lighting on the "floor") */}
       <motion.div
-        className="absolute bottom-20 right-0 text-[15vw] font-bold text-muted/5 select-none pointer-events-none whitespace-nowrap"
-        style={{ x: useTransform(mouseXSpring, (x) => x * 2) }}
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 lg:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(255, 107, 0, 0.08),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+
+      {/* 2. Grid Texture (Very subtle) */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+      {/* --- Main Content Grid --- */}
+      <motion.div
+        className="relative z-10 container max-w-6xl mx-auto px-6"
+        style={{ opacity, scale, filter, y }}
       >
-        DEVELOPER
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          {/* LEFT: Typography & Pitch */}
+          <div className="order-2 lg:order-1 flex flex-col items-start text-left space-y-8">
+
+            {/* Status Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              <span className="text-xs font-mono font-medium text-primary tracking-wide">AVAILABLE FOR HIRE</span>
+            </motion.div>
+
+            {/* Headline */}
+            <div className="space-y-4">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]"
+                onMouseEnter={() => setCursorVariant("text")}
+                onMouseLeave={() => setCursorVariant("default")}
+              >
+                Building the <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-300 to-primary animate-gradient-x">
+                  Backend Logic.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-lg text-muted-foreground max-w-xl leading-relaxed"
+              >
+                I am <span className="text-white font-medium">Ravi Rajput</span>. A Java Backend Developer engineering scalable APIs, robust microservices, and secure cloud architectures.
+              </motion.p>
+            </div>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-wrap gap-4 w-full sm:w-auto"
+            >
+              <a
+                href="#projects"
+                className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg bg-white px-8 font-medium text-black transition-all duration-300 hover:bg-gray-200 hover:ring-2 hover:ring-white hover:ring-offset-2 hover:ring-offset-black"
+                onMouseEnter={() => setCursorVariant("hover")}
+                onMouseLeave={() => setCursorVariant("default")}
+              >
+                <span className="mr-2">View Projects</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
+
+              <a
+                href="/resume.pdf"
+                className="inline-flex h-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 px-8 font-medium text-white transition-all duration-300 hover:bg-white/10"
+                onMouseEnter={() => setCursorVariant("hover")}
+                onMouseLeave={() => setCursorVariant("default")}
+              >
+                <Download className="mr-2 w-4 h-4" />
+                Resume
+              </a>
+            </motion.div>
+
+            {/* Social Proof / Stack Line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="pt-8 border-t border-white/5 w-full"
+            >
+              <p className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-widest">Powering Systems With</p>
+              <div className="flex gap-6 opacity-60 grayscale transition-all duration-500 hover:grayscale-0 hover:opacity-100">
+                {/* Simple text representation for cleaner look, or use icons */}
+                <span className="text-sm font-semibold text-white flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full" />Java</span>
+                <span className="text-sm font-semibold text-white flex items-center gap-2"><div className="w-1.5 h-1.5 bg-green-500 rounded-full" />Spring Boot</span>
+                <span className="text-sm font-semibold text-white flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />Docker</span>
+                <span className="text-sm font-semibold text-white flex items-center gap-2"><div className="w-1.5 h-1.5 bg-yellow-500 rounded-full" />AWS</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Visual Composition */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="order-1 lg:order-2 relative"
+          >
+            {/* The Background Glow behind the visual */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] opacity-40 pointer-events-none" />
+
+            {/* Container for Image + Code Window */}
+            <div className="relative">
+
+              {/* 1. The Profile Image (Clean Card) */}
+              <motion.div
+                className="relative z-100 w-64 h-64 sm:w-80 sm:h-80 mx-auto lg:mx-0 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl lg:translate-x-40"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src="/dp.jpg"
+                  alt="Ravi Rajput"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Subtle Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </motion.div>
+
+              {/* 2. The Floating Code Window (Overlapping) */}
+              <motion.div
+                className="hidden md:block absolute right-42 bottom-12 z-20"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
+              >
+                <CodeWindow />
+              </motion.div>
+
+              {/* 3. Floating "Experience" Badge (Top Right) */}
+              <motion.div
+                className="absolute -top-6 -right-6 z-200 bg-black/80 backdrop-blur-md border border-white/10 p-4 rounded-xl shadow-xl"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.8, type: "spring" }}
+              >
+                <p className="text-3xl font-bold text-white text-center">3+</p>
+                <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Years Exp</p>
+              </motion.div>
+
+            </div>
+          </motion.div>
+
+        </div>
       </motion.div>
-    </motion.section>
+    </section>
   )
 }

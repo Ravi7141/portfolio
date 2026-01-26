@@ -6,41 +6,41 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import LogoLoop from "@/components/logo-loop"
 import {
   SiJavascript,
-  SiTypescript,
   SiReact,
   SiNextdotjs,
-  SiNodedotjs,
-  SiExpress,
   SiMongodb,
-  SiTailwindcss,
   SiHtml5,
   SiCss3,
   SiGit,
   SiGithub,
   SiPostman,
   SiOpenai,
-  SiFirebase,
+  SiSpringboot,
+  SiPostgresql,
+  SiMysql,
+  SiDocker,
+  SiHibernate,
 } from "react-icons/si"
 import { FaJava } from "react-icons/fa"
 import { VscVscode } from "react-icons/vsc"
 
 const techLogos = [
   { node: <FaJava className="text-[#ED8B00]" />, title: "Java", href: "https://www.java.com" },
+  { node: <SiSpringboot className="text-[#6DB33F]" />, title: "Spring Boot", href: "https://spring.io/projects/spring-boot" },
+  { node: <SiPostgresql className="text-[#336791]" />, title: "PostgreSQL", href: "https://www.postgresql.org" },
+  { node: <SiMysql className="text-[#4479A1]" />, title: "MySQL", href: "https://www.mysql.com" },
+  { node: <SiDocker className="text-[#2496ED]" />, title: "Docker", href: "https://www.docker.com" },
+  { node: <SiHibernate className="text-[#59666C]" />, title: "Hibernate", href: "https://hibernate.org" },
+  { node: <SiMongodb className="text-[#47A248]" />, title: "MongoDB", href: "https://www.mongodb.com" },
   { node: <SiJavascript className="text-[#F7DF1E]" />, title: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-  { node: <SiTypescript className="text-[#3178C6]" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
   { node: <SiReact className="text-[#61DAFB]" />, title: "React.js", href: "https://reactjs.org" },
   { node: <SiNextdotjs className="text-white" />, title: "Next.js", href: "https://nextjs.org" },
-  { node: <SiNodedotjs className="text-[#339933]" />, title: "Node.js", href: "https://nodejs.org" },
-  { node: <SiExpress className="text-white" />, title: "Express.js", href: "https://expressjs.com" },
-  { node: <SiMongodb className="text-[#47A248]" />, title: "MongoDB", href: "https://www.mongodb.com" },
-  { node: <SiTailwindcss className="text-[#06B6D4]" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
   { node: <SiHtml5 className="text-[#E34F26]" />, title: "HTML5", href: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
   { node: <SiCss3 className="text-[#1572B6]" />, title: "CSS3", href: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
   { node: <SiGit className="text-[#F05032]" />, title: "Git", href: "https://git-scm.com" },
   { node: <SiGithub className="text-white" />, title: "GitHub", href: "https://github.com" },
   { node: <SiPostman className="text-[#FF6C37]" />, title: "Postman", href: "https://www.postman.com" },
   { node: <SiOpenai className="text-[#412991]" />, title: "OpenAI API", href: "https://openai.com" },
-  { node: <SiFirebase className="text-[#FF6C37]" />, title: "Firebase", href: "https://firebase.google.com" },
   { node: <VscVscode className="text-[#007ACC]" />, title: "Visual Studio Code", href: "https://code.visualstudio.com" },
 ]
 

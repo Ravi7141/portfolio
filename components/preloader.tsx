@@ -26,7 +26,7 @@ export function Preloader() {
               }}
               transition={{ duration: 0.15, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
             >
-              A
+              R
             </motion.span>
             <motion.span
               className="inline-block text-primary"
@@ -57,7 +57,7 @@ export function Preloader() {
             }}
             transition={{ duration: 0.2, repeat: Number.POSITIVE_INFINITY }}
           >
-            A.R
+            R.R
           </motion.div>
         </motion.div>
 

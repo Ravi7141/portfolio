@@ -141,7 +141,7 @@ Portfolio/
 │   └── utils.ts                      # Tailwind merge utilities (cn)
 │
 ├── public/                           # Static Assets
-│   ├── aditya-profile.png            # Profile photo
+│   ├── dp.png            # Profile photo
 │   ├── meetai-app.png                # Project screenshot
 │   ├── resume.pdf                    # Downloadable resume
 │   └── skybus-reservation.png        # Project screenshot

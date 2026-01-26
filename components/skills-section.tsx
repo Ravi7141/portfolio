@@ -2,19 +2,20 @@
 
 import { m } from "framer-motion"
 import {
-    SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiMongodb,
-    SiTailwindcss, SiFramer, SiGit
+    SiSpring, SiSpringboot, SiHibernate, SiPostgresql, SiMysql, SiMongodb,
+    SiDocker, SiGit, SiHtml5, SiCss3, SiJavascript
 } from "react-icons/si"
+import { FaJava } from "react-icons/fa"
 import { staggerContainer, fadeUp, scaleIn, viewportConfig } from "@/lib/animations"
 
 const skills = [
-    { name: "React", icon: SiReact, color: "#61DAFB", level: 90 },
-    { name: "Next.js", icon: SiNextdotjs, color: "#ffffff", level: 85 },
-    { name: "TypeScript", icon: SiTypescript, color: "#3178C6", level: 85 },
-    { name: "Node.js", icon: SiNodedotjs, color: "#339933", level: 80 },
+    { name: "Java", icon: FaJava, color: "#007396", level: 90 },
+    { name: "Spring Boot", icon: SiSpringboot, color: "#6DB33F", level: 85 },
+    { name: "Hibernate", icon: SiHibernate, color: "#59666C", level: 80 },
+    { name: "PostgreSQL", icon: SiPostgresql, color: "#336791", level: 85 },
+    { name: "MySQL", icon: SiMysql, color: "#4479A1", level: 80 },
     { name: "MongoDB", icon: SiMongodb, color: "#47A248", level: 75 },
-    { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", level: 95 },
-    { name: "Framer Motion", icon: SiFramer, color: "#0055FF", level: 80 },
+    { name: "Docker", icon: SiDocker, color: "#2496ED", level: 70 },
     { name: "Git", icon: SiGit, color: "#F05032", level: 85 },
 ]
 

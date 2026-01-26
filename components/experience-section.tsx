@@ -19,20 +19,44 @@ export function ExperienceSection({ setCursorVariant }: ExperienceSectionProps) 
 
     const experiences = [
         {
-            type: "work",
-            title: "Full Stack Developer",
-            company: "Freelance",
-            period: "2023 - Present",
-            description: "Developing scalable web applications using the MERN stack. Collaborating with clients to deliver custom solutions.",
-            skills: ["React", "Node.js", "MongoDB", "TailwindCSS"]
-        },
-        {
             type: "education",
             title: "B.Tech in Computer Science",
-            company: "University of Technology",
+            company: "Parul Institute of Engineering and Technology, Vadodara",
             period: "2022 - 2026",
-            description: "Pursuing a Bachelor of Technology degree with a focus on web technologies and software engineering.",
-            skills: ["Data Structures", "Algorithms", "Database Management"]
+            description: "Pursuing Bachelor's degree with a CGPA of 8.27 / 10. Focus on backend development and system architecture.",
+            skills: ["Computer Networks", "DBMS", "OOP", "OS"]
+        },
+        {
+            type: "work",
+            title: "Java Certified Foundations Associate",
+            company: "Oracle (1Z0-811)",
+            period: "Certification",
+            description: "Validated fundamental knowledge of Java programming language concepts and terminology.",
+            skills: ["Java SE", "Object Oriented Concepts"]
+        },
+        {
+            type: "work",
+            title: "Java Spring Framework 6",
+            company: "Udemy (Telusko, Navin Reddy)",
+            period: "Certification",
+            description: "Comprehensive training on Spring Framework 6 with Spring Boot 3.",
+            skills: ["Spring Boot 3", "Spring MVC", "AOP"]
+        },
+        {
+            type: "work",
+            title: "SQL on Oracle Cloud",
+            company: "Oracle",
+            period: "Certification",
+            description: "Proficiency in SQL data manipulation and definition on Oracle Cloud infrastructure.",
+            skills: ["SQL", "PL/SQL", "Oracle Cloud"]
+        },
+        {
+            type: "work",
+            title: "LeetCode Achievement",
+            company: "Problem Solving",
+            period: "Continuous",
+            description: "Solved 250+ LeetCode problems; earned a 50-day consistency badge. Demonstrated strong problem-solving skills.",
+            skills: ["Data Structures", "Algorithms", "Logic Building"]
         }
     ]
 

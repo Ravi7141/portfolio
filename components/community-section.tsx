@@ -33,10 +33,10 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 }
 
 const stats = [
-    { number: 50, suffix: "+", label: "Projects Completed", icon: Code },
-    { number: 100, suffix: "+", label: "GitHub Contributions", icon: Github },
-    { number: 3, suffix: "+", label: "Years Coding", icon: Calendar },
-    { number: 10, suffix: "+", label: "Happy Clients", icon: Users },
+    { number: 5, suffix: "+", label: "Projects Completed", icon: Code },
+    { number: 250, suffix: "+", label: "LeetCode Problems", icon: Github },
+    { number: 2026, suffix: "", label: "Graduation Year", icon: Calendar },
+    { number: 5, suffix: "+", label: "Certifications", icon: Users },
 ]
 
 export function CommunitySection({ setCursorVariant }: CommunitySectionProps) {
@@ -111,7 +111,7 @@ export function CommunitySection({ setCursorVariant }: CommunitySectionProps) {
                     viewport={viewportConfig}
                 >
                     <m.a
-                        href="https://github.com/ADITYA0018TH"
+                        href="https://github.com/Ravi7141"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-full"

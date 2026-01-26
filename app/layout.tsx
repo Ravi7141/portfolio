@@ -18,37 +18,37 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adityarajbr-portfolio.vercel.app"),
-  title: "Aditya Raj | Creative Developer",
+  title: "Ravi Rajput | Java Backend Developer",
   description:
-    "Portfolio of the Future – Crafting digital experiences that push boundaries",
+    "Portfolio of Ravi Rajput - Java Backend Developer specializing in Spring Boot and RESTful APIs.",
   keywords: [
-    "Aditya Raj",
-    "Full Stack Developer",
-    "Creative Developer",
-    "Next.js Portfolio",
-    "React Developer",
+    "Ravi Rajput",
+    "Java Backend Developer",
+    "Spring Boot",
+    "Java Developer",
+    "Backend Engineer",
   ],
   openGraph: {
-    title: "Aditya Raj | Creative Developer",
+    title: "Ravi Rajput | Java Backend Developer",
     description:
-      "Portfolio of the Future – Crafting digital experiences that push boundaries",
+      "Portfolio of Ravi Rajput - Java Backend Developer specializing in Spring Boot and RESTful APIs.",
     url: "https://adityarajbr-portfolio.vercel.app",
-    siteName: "Aditya Raj Portfolio",
+    siteName: "Ravi Rajput Portfolio",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Aditya Raj Portfolio Preview",
+        alt: "Ravi Rajput Portfolio",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya Raj | Creative Developer",
+    title: "Ravi Rajput | Java Backend Developer",
     description:
-      "Portfolio of the Future – Crafting digital experiences that push boundaries",
+      "Portfolio of Ravi Rajput - Java Backend Developer specializing in Spring Boot and RESTful APIs.",
     images: ["/og-image.png"],
   },
   generator: "v0.app",
@@ -62,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${ spaceGrotesk.variable } ${ jetbrainsMono.variable } font - sans antialiased custom - cursor - active`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font - sans antialiased custom - cursor - active`}
       >
         <AnimationProvider>
           {children}

@@ -1,9 +1,9 @@
 "use client"
 
 import type React from "react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { m, useInView, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { ExternalLink, Github, Star, GitFork } from "lucide-react"
+import { ExternalLink, Github, Star, GitFork, Loader2 } from "lucide-react"
 import { fadeUp, staggerContainer, viewportConfig, scaleIn } from "@/lib/animations"
 
 interface ProjectsSectionProps {
@@ -21,6 +21,20 @@ interface GitHubProject {
   language: string
   updatedAt: string
   image?: string
+}
+
+interface RepoData {
+  id: number
+  name: string
+  description: string | null
+  html_url: string
+  stargazers_count: number
+  forks_count: number
+  fork: boolean
+  language: string
+  updated_at: string
+  topics: string[]
+  homepage: string | null
 }
 
 const languageColors: Record<string, string> = {
@@ -42,6 +56,58 @@ const languageColors: Record<string, string> = {
   Kotlin: "#A97BFF",
   Swift: "#FA7343",
   Jupyter: "#F37626",
+}
+
+// Manual overrides for better descriptions/images for featured projects
+const featuredOverrides: Record<string, Partial<GitHubProject>> = {
+  "online-auction-system": {
+    title: "E-Commerce Auction System",
+    description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
+    tags: ["Spring Boot", "React", "MySQL", "Socket.io"],
+    image: "/auction_system.png",
+  },
+  "HospitalManagement": {
+    title: "Hospital Management System",
+    description: "Comprehensive system for managing doctors, patients, and appointments with complex JPA relationships and validation.",
+    tags: ["Java", "Spring Boot", "Next.js", "PostgreSQL"],
+    image: "/hospital_management.png"
+  },
+  "microservices-project": {
+    title: "Microservices Architecture",
+    description: "Scalable microservices implementation using Spring Cloud, Eureka, and API Gateway patterns.",
+    tags: ["Spring Cloud", "Microservices", "Docker", "Java"],
+    image: "/microservices.png"
+  },
+  "weather_SkyGuru": {
+    title: "SkyGuru Weather App",
+    description: "Real-time weather application providing accurate forecasts and environmental data visualizations.",
+    tags: ["TypeScript", "React", "OpenWeather API"],
+    image: "/weather_app.png"
+  },
+  "elegant-shop-project": {
+    title: "Elegant Shop",
+    description: "Modern e-commerce frontend built with TypeScript and advanced CSS animations.",
+    tags: ["TypeScript", "CSS3", "Shopping Cart"],
+    image: "/elegant_shop.png"
+  },
+  "Url-shortener-sb": {
+    title: "URL Shortener",
+    description: "High-performance URL shortening service built with Spring Boot and Redis caching.",
+    tags: ["Spring Boot", "Redis", "Java"],
+    image: "/url_shortener.png"
+  },
+  "journal_app": {
+    title: "Personal Journal App",
+    description: "Secure journaling application with CRUD operations and user authentication.",
+    tags: ["Java", "Spring Security", "Thymeleaf"],
+    image: "/journal_app.png"
+  },
+  "clipnest": {
+    title: "ClipNest",
+    description: "Pinterest clone with masonry grid layout, image boards, save functionality, and social sharing features.",
+    tags: ["React", "Node.js", "MongoDB", "Pinterest Clone"],
+    image: "/clipnest.png"
+  }
 }
 
 function ProjectCard({
@@ -90,9 +156,6 @@ function ProjectCard({
       ref={cardRef}
       className="relative group h-full"
       variants={fadeUp}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-10%" }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => {
         setIsHovered(true)
@@ -266,15 +329,17 @@ function ProjectCard({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
           >
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold tracking-wide hover:bg-primary/80 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-            >
-              <ExternalLink className="w-4 h-4" />
-              VIEW PROJECT
-            </a>
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold tracking-wide hover:bg-primary/80 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)]"
+              >
+                <ExternalLink className="w-4 h-4" />
+                VIEW
+              </a>
+            )}
             <a
               href={project.github}
               target="_blank"
@@ -312,32 +377,82 @@ function ProjectCard({
 }
 
 export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
-  const projects: GitHubProject[] = [
-    {
-      title: "Bus Reservation System",
-      description: "Full-stack bus reservation platform using React, Node.js, Express.js, and MongoDB. Features user authentication, bus scheduling, seat booking, and cancellation.",
-      tags: ["MERN Stack", "React", "Node.js", "MongoDB", "REST APIs"],
-      link: "https://github.com/ADITYA0018TH/Bus_Reservation_System",
-      github: "https://github.com/ADITYA0018TH/Bus_Reservation_System",
-      stars: 0,
-      forks: 0,
-      language: "JavaScript",
-      updatedAt: "2024",
-      image: "/skybus-reservation.png",
-    },
-    {
-      title: "AI Chat Application",
-      description: "Chat interface integrating OpenAI API for dynamic responses. Secure backend for messaging, user logs, and token handling.",
-      tags: ["OpenAI API", "React", "Node.js", "Secure Auth", "Context-Aware"],
-      link: "https://github.com/ADITYA0018TH/meetai",
-      github: "https://github.com/ADITYA0018TH/meetai",
-      stars: 0,
-      forks: 0,
-      language: "TypeScript",
-      updatedAt: "2024",
-      image: "/meetai-app.png",
-    },
-  ]
+  const [projects, setProjects] = useState<GitHubProject[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("https://api.github.com/users/Ravi7141/repos?sort=updated&per_page=12")
+        if (!response.ok) throw new Error("Failed to fetch projects")
+        const data: RepoData[] = await response.json()
+
+        const formattedProjects: GitHubProject[] = data
+          .filter(repo => !repo.fork && repo.name !== "Ravi7141") // Filter out forks and profile repo if desired
+          .map(repo => {
+            const override = featuredOverrides[repo.name] || {}
+            return {
+              title: override.title || repo.name.replace(/-/g, " ").replace(/_/g, " "),
+              description: override.description || repo.description || "No description available.",
+              tags: override.tags || (repo.topics.length > 0 ? repo.topics : [repo.language || "Code"]),
+              link: override.link || repo.homepage || repo.html_url,
+              github: repo.html_url,
+              stars: repo.stargazers_count,
+              forks: repo.forks_count,
+              language: repo.language || "Code",
+              updatedAt: new Date(repo.updated_at).getFullYear().toString(),
+              image: override.image
+            }
+          })
+
+          // Ensure featured projects come first if they exist in the fetched list
+          .sort((a, b) => {
+            const aFeatured = Object.keys(featuredOverrides).some(key => featuredOverrides[key].title === a.title);
+            const bFeatured = Object.keys(featuredOverrides).some(key => featuredOverrides[key].title === b.title);
+            if (aFeatured && !bFeatured) return -1;
+            if (!aFeatured && bFeatured) return 1;
+            return 0;
+          });
+
+        setProjects(formattedProjects)
+      } catch (err) {
+        console.error(err)
+        setError("Failed to load projects from GitHub")
+
+        // Fallback to manual list if API fails
+        const fallbackProjects: GitHubProject[] = [
+          {
+            title: "E-Commerce Auction System",
+            description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
+            tags: ["Spring Boot", "React", "MySQL", "Socket.io"],
+            link: "https://github.com/Ravi7141/online-auction-system",
+            github: "https://github.com/Ravi7141/online-auction-system",
+            stars: 0,
+            forks: 0,
+            language: "Java",
+            updatedAt: "2024",
+          },
+          {
+            title: "Hospital Management System",
+            description: "Comprehensive system for managing doctors, patients, and appointments with complex JPA relationships and validation.",
+            tags: ["Java", "Spring Boot", "Next.js", "PostgreSQL"],
+            link: "https://github.com/Ravi7141/HospitalManagement",
+            github: "https://github.com/Ravi7141/HospitalManagement",
+            stars: 0,
+            forks: 0,
+            language: "Java",
+            updatedAt: "2024",
+          }
+        ]
+        setProjects(fallbackProjects)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
 
   return (
     <section id="projects" className="min-h-screen px-4 py-20 md:py-32 relative overflow-hidden">
@@ -389,11 +504,17 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
         </m.div>
 
         {/* Projects grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} setCursorVariant={setCursorVariant} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
+            {projects.map((project, index) => (
+              <ProjectCard key={index} project={project} index={index} setCursorVariant={setCursorVariant} />
+            ))}
+          </div>
+        )}
 
         <m.div
           className="mt-24 text-center"
@@ -403,7 +524,7 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
           viewport={viewportConfig}
         >
           <a
-            href="https://github.com/ADITYA0018TH"
+            href="https://github.com/Ravi7141"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border border-border text-foreground font-mono text-lg hover:border-primary hover:text-primary transition-all duration-300 rounded-full group bg-card/50 backdrop-blur-sm"
