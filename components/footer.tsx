@@ -1,28 +1,28 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { Github, Linkedin, Mail, ArrowUp, Heart, Home, Code2, Star, BookOpen, Zap, Ban, FileText } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUp, Heart, MapPin, Phone, Twitter } from "lucide-react"
 import { useRef, useState } from "react"
 
-const dockItems = [
-  { icon: Home, href: "#hero", label: "Home" },
-  { icon: Code2, href: "#projects", label: "Projects" },
-  { icon: Star, href: "#about", label: "About" },
-  { icon: BookOpen, href: "#experience", label: "Experience" },
-  { icon: Zap, href: "#tech-stack", label: "Tech Stack" },
-  { icon: Ban, href: "#contact", label: "Contact" },
-  { icon: Mail, href: "mailto:rajputravi2070@gmail.com", label: "Email" },
-  { icon: FileText, href: "/resume.pdf", label: "Resume" },
+const socialLinks = [
+  { icon: Github, href: "https://github.com/ADITYA0018TH", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com/in/adityaraj", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Mail, href: "mailto:adityaraj@example.com", label: "Email" },
 ]
 
-const socialLinks = [
-  { icon: Github, href: "https://github.com/Ravi7141", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/ravi-rajput", label: "LinkedIn" },
+const navLinks = [
+  { label: "Home", href: "#hero" },
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Stack", href: "#tech-stack" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
 ]
 
 export function Footer({ setCursorVariant }: { setCursorVariant: (variant: string) => void }) {
   const containerRef = useRef<HTMLElement>(null)
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -36,176 +36,233 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  const handleMouseEnter = () => setCursorVariant("hover")
+  const handleMouseEnter = () => setCursorVariant("text")
   const handleMouseLeave = () => setCursorVariant("default")
-
-  // Calculate scale for dock magnification effect
-  const getScale = (index: number) => {
-    if (hoveredIndex === null) return 1
-    const distance = Math.abs(hoveredIndex - index)
-    if (distance === 0) return 1.5
-    if (distance === 1) return 1.25
-    if (distance === 2) return 1.1
-    return 1
-  }
-
-  const getTranslateY = (index: number) => {
-    if (hoveredIndex === null) return 0
-    const distance = Math.abs(hoveredIndex - index)
-    if (distance === 0) return -20
-    if (distance === 1) return -12
-    if (distance === 2) return -5
-    return 0
-  }
 
   return (
     <motion.footer
       ref={containerRef}
       style={{ y, opacity }}
-      className="relative border-t border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden pt-16 pb-8"
+      className="relative border-t border-cyan-500/20 bg-black/95 backdrop-blur-xl overflow-hidden pt-24 pb-12"
     >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent pointer-events-none" />
+      {/* Animated grid background */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: "50px 50px",
+          }}
+        />
+      </div>
 
-      {/* Glowing orb */}
+      {/* Glowing orbs */}
       <motion.div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"
+        className="absolute -top-20 left-1/4 w-60 h-60 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"
         animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
+          scale: [1, 1.2, 1],
+          opacity: [0.2, 0.4, 0.2],
         }}
         transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
       />
+      <motion.div
+        className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-[150px] pointer-events-none"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.1, 0.3, 0.1],
+        }}
+        transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Main footer content - 4 Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 lg:gap-20 mb-16 md:mb-20">
 
-        {/* Dock Navigation - macOS Style */}
-        <div className="flex justify-center mb-16">
-          <motion.div
-            className="relative inline-flex items-end gap-2 px-4 py-3 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl"
-            style={{
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-            }}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Dock items */}
-            {dockItems.map((item, index) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                className="relative group flex flex-col items-center"
-                onMouseEnter={() => {
-                  setHoveredIndex(index)
-                  handleMouseEnter()
-                }}
-                onMouseLeave={() => {
-                  setHoveredIndex(null)
-                  handleMouseLeave()
-                }}
+          {/* Column 1: Brand & Info */}
+          <div className="space-y-8">
+            <motion.div className="relative inline-block" whileHover={{ scale: 1.02 }}>
+              <h3 className="text-3xl font-black tracking-tighter">
+                <span className="text-cyan-400">ADITYA</span>
+                <br />
+                <span className="text-white">RAJ</span>
+              </h3>
+              <motion.div
+                className="absolute -bottom-2 left-0 h-[3px] bg-linear-to-r from-cyan-400 to-transparent"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+            </motion.div>
+
+            <p className="text-neutral-400 text-sm leading-relaxed font-mono">
+              Building the future, one pixel at a time.
+              <span className="text-cyan-400 block mt-2 font-bold">Full Stack Developer</span>
+            </p>
+
+            {/* Status indicator */}
+            <div className="flex items-center gap-3 pt-2">
+              <motion.div
+                className="w-2.5 h-2.5 bg-green-500 rounded-full"
                 animate={{
-                  scale: getScale(index),
-                  y: getTranslateY(index),
+                  boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.4)", "0 0 0 8px rgba(34, 197, 94, 0)"],
                 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 25,
-                }}
-              >
-                {/* Tooltip */}
+                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+              />
+              <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">Available for work</span>
+            </div>
+          </div>
+
+          {/* Column 2: Navigation */}
+          <div className="lg:pl-8">
+            <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-[0.3em] mb-8">Navigation</h4>
+            <nav className="flex flex-col gap-4">
+              {navLinks.map((link, index) => (
                 <motion.div
-                  className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-neutral-800/95 backdrop-blur-md text-white text-xs font-medium rounded-lg whitespace-nowrap pointer-events-none border border-white/10"
-                  initial={{ opacity: 0, y: 5, scale: 0.8 }}
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    y: hoveredIndex === index ? 0 : 5,
-                    scale: hoveredIndex === index ? 1 : 0.8,
-                  }}
-                  transition={{ duration: 0.15 }}
+                  key={link.label}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
                 >
-                  {item.label}
-                  {/* Tooltip arrow */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-neutral-800/95" />
+                  <a
+                    href={link.href}
+                    className="relative group inline-flex items-center gap-2"
+                    onMouseEnter={() => {
+                      handleMouseEnter()
+                      setHoveredLink(link.label)
+                    }}
+                    onMouseLeave={() => {
+                      handleMouseLeave()
+                      setHoveredLink(null)
+                    }}
+                  >
+                    <span className="text-neutral-400 text-sm font-medium transition-colors group-hover:text-cyan-400">
+                      {link.label}
+                    </span>
+                    <motion.span
+                      className="text-cyan-400 text-xs absolute -left-4"
+                      initial={{ opacity: 0, x: -5 }}
+                      animate={{
+                        opacity: hoveredLink === link.label ? 1 : 0,
+                        x: hoveredLink === link.label ? 0 : -5,
+                      }}
+                    >
+                      →
+                    </motion.span>
+                  </a>
                 </motion.div>
+              ))}
+            </nav>
+          </div>
 
-                {/* Icon container */}
-                <div className="relative w-12 h-12 flex items-center justify-center rounded-xl bg-neutral-700/60 backdrop-blur-sm border border-white/10 transition-all duration-200 group-hover:bg-neutral-600/70 group-hover:border-white/20">
-                  <item.icon className="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors" />
-
-                  {/* Reflection effect */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent opacity-50" />
-                </div>
-              </motion.a>
-            ))}
-
-            {/* Divider */}
-            <div className="w-px h-10 bg-white/20 mx-2" />
-
-            {/* Social links */}
-            {socialLinks.map((social, index) => (
+          {/* Column 3: Contact Info */}
+          <div className="space-y-6">
+            <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-[0.3em] mb-8">Contact</h4>
+            <div className="space-y-6">
               <motion.a
-                key={social.label}
-                href={social.href}
+                href="https://maps.app.goo.gl/bAiDP4bgFGq8WcEd7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative group flex flex-col items-center"
-                onMouseEnter={() => {
-                  setHoveredIndex(dockItems.length + index)
-                  handleMouseEnter()
-                }}
-                onMouseLeave={() => {
-                  setHoveredIndex(null)
-                  handleMouseLeave()
-                }}
-                animate={{
-                  scale: getScale(dockItems.length + index),
-                  y: getTranslateY(dockItems.length + index),
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 25,
-                }}
+                className="flex items-start gap-3 group"
+                whileHover={{ x: 5 }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                {/* Tooltip */}
-                <motion.div
-                  className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-neutral-800/95 backdrop-blur-md text-white text-xs font-medium rounded-lg whitespace-nowrap pointer-events-none border border-white/10"
-                  initial={{ opacity: 0, y: 5, scale: 0.8 }}
-                  animate={{
-                    opacity: hoveredIndex === dockItems.length + index ? 1 : 0,
-                    y: hoveredIndex === dockItems.length + index ? 0 : 5,
-                    scale: hoveredIndex === dockItems.length + index ? 1 : 0.8,
-                  }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {social.label}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-neutral-800/95" />
-                </motion.div>
-
-                {/* Icon container */}
-                <div className="relative w-12 h-12 flex items-center justify-center rounded-xl bg-neutral-700/60 backdrop-blur-sm border border-white/10 transition-all duration-200 group-hover:bg-neutral-600/70 group-hover:border-white/20">
-                  <social.icon className="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors" />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent opacity-50" />
-                </div>
+                <MapPin className="w-5 h-5 text-cyan-400 mt-0.5 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
+                <span className="text-neutral-400 text-sm group-hover:text-white transition-colors leading-tight">
+                  Bihar, India
+                </span>
               </motion.a>
-            ))}
-          </motion.div>
+
+              <motion.a
+                href="tel:+917061452180"
+                className="flex items-center gap-3 group"
+                whileHover={{ x: 5 }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <Phone className="w-5 h-5 text-cyan-400 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
+                <span className="text-neutral-400 text-sm group-hover:text-white transition-colors">
+                  +91 7061452180
+                </span>
+              </motion.a>
+
+              <motion.a
+                href="mailto:aditya.raj862003@gmail.com"
+                className="flex items-center gap-3 group"
+                whileHover={{ x: 5 }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <Mail className="w-5 h-5 text-cyan-400 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
+                <span className="text-neutral-400 text-sm group-hover:text-white transition-colors">
+                  aditya.raj862003@gmail.com
+                </span>
+              </motion.a>
+            </div>
+          </div>
+
+          {/* Column 4: Connect & Actions */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-[0.3em] mb-8">Connect</h4>
+              <div className="flex gap-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="relative p-3 border border-neutral-800 rounded-xl bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10">
+                      <social.icon className="w-5 h-5 text-neutral-400 transition-colors group-hover:text-cyan-400" />
+                      {/* Glow effect */}
+                      <motion.div className="absolute inset-0 rounded-xl bg-cyan-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            {/* Back to top button */}
+            <motion.button
+              onClick={scrollToTop}
+              className="group flex items-center gap-3 mt-12 self-start"
+              whileHover={{ x: 5 }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="p-3 border border-neutral-800 rounded-lg bg-neutral-900/50 transition-all group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10">
+                <ArrowUp className="w-4 h-4 text-neutral-400 group-hover:text-cyan-400 transition-colors" />
+              </div>
+              <span className="text-xs font-mono text-neutral-500 uppercase tracking-[0.2em] group-hover:text-cyan-400 transition-colors">
+                Back to top
+              </span>
+            </motion.button>
+          </div>
         </div>
 
         {/* Divider with animation */}
         <div className="relative h-px mb-8">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-500/30 to-transparent" />
           <motion.div
-            className="absolute top-0 left-0 h-full w-1/4 bg-gradient-to-r from-transparent via-primary/50 to-transparent"
-            animate={{ x: ["-100%", "500%"] }}
-            transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            className="absolute top-0 left-0 h-full w-1/3 bg-linear-to-r from-transparent via-cyan-500/50 to-transparent"
+            animate={{ x: ["-100%", "400%"] }}
+            transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
           />
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-4">
           <motion.p
             className="text-xs font-mono text-neutral-500 flex items-center gap-2"
             initial={{ opacity: 0 }}
@@ -214,7 +271,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
             <span className="text-neutral-500">©</span>
             <span>{new Date().getFullYear()}</span>
             <span className="text-neutral-600">|</span>
-            <span>Ravi Rajput</span>
+            <span>Aditya Raj</span>
             <span className="text-neutral-600">|</span>
             <span>Crafted with</span>
             <motion.span
@@ -225,32 +282,38 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
             </motion.span>
           </motion.p>
 
-          {/* Back to top button */}
-          <motion.button
-            onClick={scrollToTop}
-            className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all"
-            whileHover={{ y: -2 }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <ArrowUp className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" />
-            <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider group-hover:text-white transition-colors">
-              Back to top
-            </span>
-          </motion.button>
+          {/* Tech badges */}
+          <div className="flex items-center gap-3">
+            {["Next.js", "TypeScript", "Tailwind"].map((tech, index) => (
+              <motion.span
+                key={tech}
+                className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider border border-neutral-800 rounded bg-neutral-900/50 text-neutral-500"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{
+                  borderColor: "rgba(0, 212, 255, 0.5)",
+                  color: "rgb(0, 212, 255)",
+                  boxShadow: "0 0 15px rgba(0, 212, 255, 0.1)"
+                }}
+              >
+                {tech}
+              </motion.span>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Large background text */}
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none select-none">
         <motion.h2
-          className="text-[15vw] font-black text-white/[0.02] leading-none tracking-tighter text-center whitespace-nowrap"
+          className="text-[18vw] font-black text-white/5 leading-none tracking-tighter text-center whitespace-nowrap"
           style={{ transform: "translateY(35%)" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          RAVI RAJPUT
+          ADITYA RAJ
         </motion.h2>
       </div>
     </motion.footer>
