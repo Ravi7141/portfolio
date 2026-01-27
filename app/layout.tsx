@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ravirajput-portfolio.vercel.app"),
+  metadataBase: new URL("https://portfolio-ravi-rajput-46.vercel.app"),
   title: "Ravi Rajput | Java Backend Developer",
   description:
     "Portfolio of Ravi Rajput - Java Backend Developer specializing in Spring Boot and RESTful APIs.",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "Ravi Rajput | Java Backend Developer",
     description:
       "Portfolio of Ravi Rajput - Java Backend Developer specializing in Spring Boot and RESTful APIs.",
-    url: "https://ravirajput-portfolio.vercel.app",
+    url: "https://portfolio-ravi-rajput-46.vercel.app",
     siteName: "Ravi Rajput Portfolio",
     images: [
       {
