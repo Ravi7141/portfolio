@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
-import { Send, Mail, MapPin, ArrowRight, Sparkles } from "lucide-react"
+import { Send, Mail, MapPin, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react"
 import { fadeUp, viewportConfig } from "@/lib/animations"
 import { MagneticButton } from "@/components/ui/magnetic-button"
 
@@ -14,6 +14,7 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
     const containerRef = useRef<HTMLElement>(null)
     const formRef = useRef<HTMLFormElement>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [showSuccess, setShowSuccess] = useState(false)
 
     const mouseXSpring = useSpring(0, { stiffness: 100, damping: 30 })
     const mouseYSpring = useSpring(0, { stiffness: 100, damping: 30 })
@@ -30,8 +31,12 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
         setIsSubmitting(true)
         setTimeout(() => {
             setIsSubmitting(false)
+            setShowSuccess(true)
             if (formRef.current) formRef.current.reset()
-            alert("Message sent! (This is a demo)")
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                setShowSuccess(false)
+            }, 3000)
         }, 2000)
     }
 
@@ -242,6 +247,19 @@ export function ContactSection({ setCursorVariant }: ContactSectionProps) {
                                         )}
                                     </button>
                                 </MagneticButton>
+
+                                {/* Success Message */}
+                                {showSuccess && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center gap-3"
+                                    >
+                                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                        <span className="text-green-500 font-medium">Message sent successfully!</span>
+                                    </motion.div>
+                                )}
                             </div>
                         </form>
                     </motion.div>
