@@ -219,5 +219,3 @@ The project uses Tailwind CSS for styling. You can customize the color palette, 
 ### Content
 Most content is managed directly within the specific section components in the `components/` directory. For example, to update the projects list, verify the data arrays in `components/projects-section.tsx`.
 
-## 📄 License
-[MIT](LICENSE)

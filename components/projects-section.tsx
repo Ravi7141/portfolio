@@ -382,76 +382,108 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("https://api.github.com/users/Ravi7141/repos?sort=updated&per_page=12")
-        if (!response.ok) throw new Error("Failed to fetch projects")
-        const data: RepoData[] = await response.json()
-
-        const formattedProjects: GitHubProject[] = data
-          .filter(repo => !repo.fork && repo.name !== "Ravi7141") // Filter out forks and profile repo if desired
-          .map(repo => {
-            const override = featuredOverrides[repo.name] || {}
-            return {
-              title: override.title || repo.name.replace(/-/g, " ").replace(/_/g, " "),
-              description: override.description || repo.description || "No description available.",
-              tags: override.tags || (repo.topics.length > 0 ? repo.topics : [repo.language || "Code"]),
-              link: override.link || repo.homepage || repo.html_url,
-              github: repo.html_url,
-              stars: repo.stargazers_count,
-              forks: repo.forks_count,
-              language: repo.language || "Code",
-              updatedAt: new Date(repo.updated_at).getFullYear().toString(),
-              image: override.image
-            }
-          })
-
-          // Ensure featured projects come first if they exist in the fetched list
-          .sort((a, b) => {
-            const aFeatured = Object.keys(featuredOverrides).some(key => featuredOverrides[key].title === a.title);
-            const bFeatured = Object.keys(featuredOverrides).some(key => featuredOverrides[key].title === b.title);
-            if (aFeatured && !bFeatured) return -1;
-            if (!aFeatured && bFeatured) return 1;
-            return 0;
-          });
-
-        setProjects(formattedProjects)
-      } catch (err) {
-        console.error(err)
-        setError("Failed to load projects from GitHub")
-
-        // Fallback to manual list if API fails
-        const fallbackProjects: GitHubProject[] = [
-          {
-            title: "E-Commerce Auction System",
-            description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
-            tags: ["Spring Boot", "React", "MySQL", "Socket.io"],
-            link: "https://github.com/Ravi7141/online-auction-system",
-            github: "https://github.com/Ravi7141/online-auction-system",
-            stars: 0,
-            forks: 0,
-            language: "Java",
-            updatedAt: "2024",
-          },
-          {
-            title: "Hospital Management System",
-            description: "Comprehensive system for managing doctors, patients, and appointments with complex JPA relationships and validation.",
-            tags: ["Java", "Spring Boot", "Next.js", "PostgreSQL"],
-            link: "https://github.com/Ravi7141/HospitalManagement",
-            github: "https://github.com/Ravi7141/HospitalManagement",
-            stars: 0,
-            forks: 0,
-            language: "Java",
-            updatedAt: "2024",
-          }
-        ]
-        setProjects(fallbackProjects)
-      } finally {
-        setLoading(false)
+    // Static list of projects with images only (no GitHub API fetch)
+    const staticProjects: GitHubProject[] = [
+      {
+        title: "Online Auction System",
+        description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
+        tags: ["Spring Boot", "React", "MySQL"],
+        link: "https://github.com/Ravi7141/online-auction-system",
+        github: "https://github.com/Ravi7141/online-auction-system",
+        stars: 0,
+        forks: 0,
+        language: "Java",
+        updatedAt: "2024",
+        image: "/auction_system.png"
+      },
+      {
+        title: "Hospital Management System",
+        description: "Comprehensive system for managing doctors, patients, and appointments with complex JPA relationships and validation.",
+        tags: ["Java", "Spring Boot", "Next.js", "PostgreSQL"],
+        link: "https://github.com/Ravi7141/HospitalManagement",
+        github: "https://github.com/Ravi7141/HospitalManagement",
+        stars: 0,
+        forks: 0,
+        language: "Java",
+        updatedAt: "2024",
+        image: "/hospital_management.png"
+      },
+      {
+        title: "Microservices Architecture",
+        description: "Scalable microservices implementation using Spring Cloud, Eureka, and API Gateway patterns.",
+        tags: ["Spring Cloud", "Microservices", "Docker", "Java"],
+        link: "https://github.com/Ravi7141/microservices-project",
+        github: "https://github.com/Ravi7141/microservices-project",
+        stars: 0,
+        forks: 0,
+        language: "Java",
+        updatedAt: "2024",
+        image: "/microservices.png"
+      },
+      {
+        title: "SkyGuru Weather App",
+        description: "Real-time weather application providing accurate forecasts and environmental data visualizations.",
+        tags: ["TypeScript", "React", "OpenWeather API"],
+        link: "https://github.com/Ravi7141/weather_SkyGuru",
+        github: "https://github.com/Ravi7141/weather_SkyGuru",
+        stars: 0,
+        forks: 0,
+        language: "TypeScript",
+        updatedAt: "2024",
+        image: "/weather_app.png"
+      },
+      {
+        title: "Elegant Shop",
+        description: "Modern e-commerce frontend built with TypeScript and advanced CSS animations.",
+        tags: ["TypeScript", "CSS3", "Shopping Cart"],
+        link: "https://github.com/Ravi7141/elegant-shop-project",
+        github: "https://github.com/Ravi7141/elegant-shop-project",
+        stars: 0,
+        forks: 0,
+        language: "TypeScript",
+        updatedAt: "2024",
+        image: "/elegant_shop.png"
+      },
+      {
+        title: "URL Shortener",
+        description: "High-performance URL shortening service built with Spring Boot and Redis caching.",
+        tags: ["Spring Boot", "Redis", "Java"],
+        link: "https://github.com/Ravi7141/Url-shortener-sb",
+        github: "https://github.com/Ravi7141/Url-shortener-sb",
+        stars: 0,
+        forks: 0,
+        language: "Java",
+        updatedAt: "2024",
+        image: "/url_shortener.png"
+      },
+      {
+        title: "Personal Journal App",
+        description: "Secure journaling application with CRUD operations and user authentication.",
+        tags: ["Java", "Spring Security", "Thymeleaf"],
+        link: "https://github.com/Ravi7141/journal_app",
+        github: "https://github.com/Ravi7141/journal_app",
+        stars: 0,
+        forks: 0,
+        language: "Java",
+        updatedAt: "2024",
+        image: "/journal_app.png"
+      },
+      {
+        title: "ClipNest",
+        description: "Pinterest clone with masonry grid layout, image boards, save functionality, and social sharing features.",
+        tags: ["React", "Node.js", "MongoDB", "Pinterest Clone"],
+        link: "https://github.com/Ravi7141/clipnest",
+        github: "https://github.com/Ravi7141/clipnest",
+        stars: 0,
+        forks: 0,
+        language: "JavaScript",
+        updatedAt: "2024",
+        image: "/clipnest.png"
       }
-    }
+    ]
 
-    fetchProjects()
+    setProjects(staticProjects)
+    setLoading(false)
   }, [])
 
   return (
