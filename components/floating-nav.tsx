@@ -10,7 +10,7 @@ const navItems = [
   { id: "hero", icon: Home, label: "Home" },
   { id: "about", icon: User, label: "About" },
   { id: "projects", icon: Briefcase, label: "Projects" },
-  { id: "tech", icon: Code2, label: "Skills" },
+  { id: "tech-stack", icon: Code2, label: "Skills" },
 
   { id: "contact", icon: Mail, label: "Contact" },
 ]

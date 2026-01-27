@@ -59,7 +59,7 @@ export function TechStackSection({ setCursorVariant }: TechStackSectionProps) {
   const rotate = useTransform(scrollYProgress, [0, 1], [-5, 5])
 
   return (
-    <section ref={containerRef} className="py-20 md:py-32 relative overflow-hidden">
+    <section id="tech-stack" ref={containerRef} className="py-20 md:py-32 relative overflow-hidden">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-cyan-900/20 via-transparent to-transparent opacity-50 pointer-events-none" />
 
