@@ -6,9 +6,9 @@ import { useRef, useState } from "react"
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/Ravi7141", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/ravi-rajput", label: "LinkedIn" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/ravi-rajput-0093a32b3/", label: "LinkedIn" },
   { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Mail, href: "mailto:ravi.rajput@example.com", label: "Email" },
+  { icon: Mail, href: "mailto:rajputravi2070@gmail.com", label: "Email" },
 ]
 
 const navLinks = [
@@ -99,7 +99,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
 
             <p className="text-neutral-400 text-sm leading-relaxed font-mono">
               Building the future, one pixel at a time.
-              <span className="text-cyan-400 block mt-2 font-bold">Full Stack Developer</span>
+              <span className="text-cyan-400 block mt-2 font-bold">Java Backend Developer</span>
             </p>
 
             {/* Status indicator */}
@@ -172,12 +172,12 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
               >
                 <MapPin className="w-5 h-5 text-cyan-400 mt-0.5 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
                 <span className="text-neutral-400 text-sm group-hover:text-white transition-colors leading-tight">
-                  Bihar, India
+                  Vadodara, Gujarat, India
                 </span>
               </motion.a>
 
               <motion.a
-                href="tel:+917061452180"
+                href="tel:+919313799018"
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 onMouseEnter={handleMouseEnter}
@@ -185,12 +185,12 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
               >
                 <Phone className="w-5 h-5 text-cyan-400 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
                 <span className="text-neutral-400 text-sm group-hover:text-white transition-colors">
-                  +91 7061452180
+                  +91 9313799018
                 </span>
               </motion.a>
 
               <motion.a
-                href="mailto:ravi.rajput@example.com"
+                href="mailto:rajputravi2070@gmail.com"
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 onMouseEnter={handleMouseEnter}
@@ -198,7 +198,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
               >
                 <Mail className="w-5 h-5 text-cyan-400 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
                 <span className="text-neutral-400 text-sm group-hover:text-white transition-colors">
-                  ravi.rajput@example.com
+                  rajputravi2070@gmail.com
                 </span>
               </motion.a>
             </div>
