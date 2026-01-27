@@ -61,7 +61,7 @@ const languageColors: Record<string, string> = {
 // Manual overrides for better descriptions/images for featured projects
 const featuredOverrides: Record<string, Partial<GitHubProject>> = {
   "online-auction-system": {
-    title: "E-Commerce Auction System",
+    title: "Online Auction System",
     description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
     tags: ["Spring Boot", "React", "MySQL", "Socket.io"],
     image: "/auction_system.png",
@@ -386,8 +386,8 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
     const staticProjects: GitHubProject[] = [
       {
         title: "Online Auction System",
-        description: "Full-stack auction system with Spring Boot & React. Features bidding logic, product management, and user authentication.",
-        tags: ["Spring Boot", "React", "MySQL"],
+        description: "A full-stack web application for online auctions built with Java Servlets, JSP, and MySQL. Users can create auctions, place bids, and manage their auction activities through a modern, responsive interface.",
+        tags: ["Java Servlet", "JSP", "MySQL"],
         link: "https://github.com/Ravi7141/online-auction-system",
         github: "https://github.com/Ravi7141/online-auction-system",
         stars: 0,
@@ -398,7 +398,7 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
       },
       {
         title: "Hospital Management System",
-        description: "Comprehensive system for managing doctors, patients, and appointments with complex JPA relationships and validation.",
+        description: "A full-stack healthcare management application built with Spring Boot and Next.js, featuring patient management, doctor scheduling, appointment booking, and insurance tracking.",
         tags: ["Java", "Spring Boot", "Next.js", "PostgreSQL"],
         link: "https://github.com/Ravi7141/HospitalManagement",
         github: "https://github.com/Ravi7141/HospitalManagement",
@@ -410,8 +410,8 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
       },
       {
         title: "Microservices Architecture",
-        description: "Scalable microservices implementation using Spring Cloud, Eureka, and API Gateway patterns.",
-        tags: ["Spring Cloud", "Microservices", "Docker", "Java"],
+        description: "A scalable Quiz Application built using Spring Boot Microservices Architecture with service discovery, API gateway, and inter-service communication using OpenFeign.",
+        tags: ["Spring Boot", "Microservices", "OpenFeign", "Eureka"],
         link: "https://github.com/Ravi7141/microservices-project",
         github: "https://github.com/Ravi7141/microservices-project",
         stars: 0,
@@ -421,9 +421,9 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
         image: "/microservices.png"
       },
       {
-        title: "SkyGuru Weather App",
-        description: "Real-time weather application providing accurate forecasts and environmental data visualizations.",
-        tags: ["TypeScript", "React", "OpenWeather API"],
+        title: "SkyGuru - Modern Weather App",
+        description: "A beautiful, feature-rich weather application built with Next.js featuring stunning animations, real-time weather data, and a premium user experience.",
+        tags: ["Next.js", "TypeScript", "TailwindCSS"],
         link: "https://github.com/Ravi7141/weather_SkyGuru",
         github: "https://github.com/Ravi7141/weather_SkyGuru",
         stars: 0,
@@ -433,9 +433,9 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
         image: "/weather_app.png"
       },
       {
-        title: "Elegant Shop",
-        description: "Modern e-commerce frontend built with TypeScript and advanced CSS animations.",
-        tags: ["TypeScript", "CSS3", "Shopping Cart"],
+        title: "Elegant Shop Project",
+        description: "Elegant Shop Project is a full-stack e-commerce web application that allows users to browse products, view detailed information, add products to their cart, and manage products efficiently.",
+        tags: ["TypeScript", "E-commerce", "Shopping Cart"],
         link: "https://github.com/Ravi7141/elegant-shop-project",
         github: "https://github.com/Ravi7141/elegant-shop-project",
         stars: 0,
@@ -446,8 +446,8 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
       },
       {
         title: "URL Shortener",
-        description: "High-performance URL shortening service built with Spring Boot and Redis caching.",
-        tags: ["Spring Boot", "Redis", "Java"],
+        description: "A modern, full-stack URL shortening application with analytics dashboard built with Spring Boot and React.",
+        tags: ["Spring Boot", "React", "Analytics"],
         link: "https://github.com/Ravi7141/Url-shortener-sb",
         github: "https://github.com/Ravi7141/Url-shortener-sb",
         stars: 0,
@@ -457,9 +457,9 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
         image: "/url_shortener.png"
       },
       {
-        title: "Personal Journal App",
-        description: "Secure journaling application with CRUD operations and user authentication.",
-        tags: ["Java", "Spring Security", "Thymeleaf"],
+        title: "Journal App",
+        description: "A secure and feature-rich journal application built with Spring Boot and MongoDB, allowing users to create, manage, and organize their personal journal entries with JWT authentication, weather integration, and sentiment analysis.",
+        tags: ["Spring Boot", "MongoDB", "JWT", "Spring Security"],
         link: "https://github.com/Ravi7141/journal_app",
         github: "https://github.com/Ravi7141/journal_app",
         stars: 0,
