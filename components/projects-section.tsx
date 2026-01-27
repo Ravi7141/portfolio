@@ -559,12 +559,11 @@ export function ProjectsSection({ setCursorVariant }: ProjectsSectionProps) {
             href="https://github.com/Ravi7141"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 border border-border text-foreground font-mono text-lg hover:border-primary hover:text-primary transition-all duration-300 rounded-full group bg-card/50 backdrop-blur-sm"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-black/40 backdrop-blur-md border border-cyan-500/30 rounded-full text-white font-medium hover:bg-cyan-500/10 hover:border-cyan-500/50 transition-all duration-300 hover:scale-105"
             onMouseEnter={() => setCursorVariant("hover")}
             onMouseLeave={() => setCursorVariant("default")}
           >
-            <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-            VIEW GITHUB PROFILE
+            View All Projects
             <m.span
               className="inline-block"
               animate={{ x: [0, 5, 0] }}
