@@ -5,10 +5,10 @@ import { Github, Linkedin, Mail, ArrowUp, Heart, MapPin, Phone, Twitter } from "
 import { useRef, useState } from "react"
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/ADITYA0018TH", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/adityaraj", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/Ravi7141", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com/in/ravi-rajput", label: "LinkedIn" },
   { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Mail, href: "mailto:adityaraj@example.com", label: "Email" },
+  { icon: Mail, href: "mailto:ravi.rajput@example.com", label: "Email" },
 ]
 
 const navLinks = [
@@ -85,9 +85,9 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
           <div className="space-y-8">
             <motion.div className="relative inline-block" whileHover={{ scale: 1.02 }}>
               <h3 className="text-3xl font-black tracking-tighter">
-                <span className="text-cyan-400">ADITYA</span>
+                <span className="text-cyan-400">RAVI</span>
                 <br />
-                <span className="text-white">RAJ</span>
+                <span className="text-white">RAJPUT</span>
               </h3>
               <motion.div
                 className="absolute -bottom-2 left-0 h-[3px] bg-linear-to-r from-cyan-400 to-transparent"
@@ -190,7 +190,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
               </motion.a>
 
               <motion.a
-                href="mailto:aditya.raj862003@gmail.com"
+                href="mailto:ravi.rajput@example.com"
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 onMouseEnter={handleMouseEnter}
@@ -198,7 +198,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
               >
                 <Mail className="w-5 h-5 text-cyan-400 shrink-0 group-hover:text-cyan-400/80 transition-colors" />
                 <span className="text-neutral-400 text-sm group-hover:text-white transition-colors">
-                  aditya.raj862003@gmail.com
+                  ravi.rajput@example.com
                 </span>
               </motion.a>
             </div>
@@ -271,7 +271,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
             <span className="text-neutral-500">©</span>
             <span>{new Date().getFullYear()}</span>
             <span className="text-neutral-600">|</span>
-            <span>Aditya Raj</span>
+            <span>Ravi Rajput</span>
             <span className="text-neutral-600">|</span>
             <span>Crafted with</span>
             <motion.span
@@ -313,7 +313,7 @@ export function Footer({ setCursorVariant }: { setCursorVariant: (variant: strin
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          ADITYA RAJ
+          RAVI RAJPUT
         </motion.h2>
       </div>
     </motion.footer>
