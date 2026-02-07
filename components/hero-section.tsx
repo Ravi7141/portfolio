@@ -260,7 +260,7 @@ export function HeroSection({ setCursorVariant }: { setCursorVariant: (v: string
 
               {/* 1. The Profile Image (Clean Card) */}
               <motion.div
-                className="relative z-100 w-80 h-80 sm:w-96 sm:h-96 mx-auto lg:mx-0 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl lg:translate-x-40 lg:translate-y-16"
+                className="relative z-100 w-80 h-80 sm:w-[27rem] sm:h-[27rem] mx-auto lg:mx-0 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl lg:translate-x-40 lg:translate-y-28"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
